@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="App completo de estudos - Liderança e Bases Psicológicas EsFM">
+  <meta name="theme-color" content="#764ba2">
+  <title>🎖️ Liderança & Psicologia - EsFM</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+.App{min-height:100vh;display:flex;flex-direction:column}
+.navbar{background:rgba(255,255,255,.97);backdrop-filter:blur(10px);padding:.8rem 1.5rem;box-shadow:0 2px 20px rgba(0,0,0,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;position:sticky;top:0;z-index:1000}
+.nav-brand{font-size:1.3rem;font-weight:bold;color:#667eea;white-space:nowrap}
+.nav-links{display:flex;gap:.3rem;flex-wrap:wrap}
+.nav-links button{background:transparent;border:none;padding:.4rem .7rem;border-radius:8px;cursor:pointer;transition:all .3s;font-size:.8rem;color:#333}
+.nav-links button:hover{background:#f0f0f0;transform:translateY(-2px)}
+.nav-links button.ativo{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;font-weight:bold}
+.conteudo-principal{flex:1;padding:1.5rem;max-width:1200px;width:100%;margin:0 auto}
+.container-inicio{animation:fadeIn .5s}
+.hero{background:#fff;padding:2.5rem;border-radius:20px;text-align:center;margin-bottom:1.5rem;box-shadow:0 10px 40px rgba(0,0,0,.1)}
+.titulo-principal{font-size:2.2rem;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.subtitulo{font-size:1.1rem;color:#666}
+.cards-inicio{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+.card-inicio{background:#fff;padding:1.5rem;border-radius:15px;text-align:center;cursor:pointer;transition:all .3s;box-shadow:0 5px 20px rgba(0,0,0,.1)}
+.card-inicio:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,0,0,.2)}
+.card-icon{font-size:2.5rem;margin-bottom:.8rem}
+.card-inicio h3{color:#333;margin-bottom:.3rem;font-size:1rem}
+.card-inicio p{color:#666;font-size:.85rem}
+.progresso-geral{background:#fff;padding:1.5rem;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.1)}
+.progresso-geral h3{margin-bottom:1rem;color:#333}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.stat{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:1.2rem;border-radius:10px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+.stat-label{font-size:.85rem}
+.stat-valor{font-size:1.4rem;font-weight:bold}
+.container-conteudo,.container-mapa,.container-flashcards,.container-consulta,.container-questoes,.container-exercicio{background:#fff;padding:2rem;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.1);animation:fadeIn .5s}
+.titulo-secao{font-size:1.8rem;margin-bottom:1.5rem;color:#333;text-align:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.lista-resumo{display:flex;flex-direction:column;gap:.8rem}
+.item-resumo{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);padding:1.2rem;border-radius:10px;color:#fff;display:flex;align-items:center;gap:1rem;transition:all .3s}
+.item-resumo:hover{transform:translateX(8px);box-shadow:0 5px 20px rgba(0,0,0,.2)}
+.numero-item{background:#fff;color:#f5576c;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0}
+.item-resumo p{flex:1;font-size:1rem}
+.blocos-resumo{display:flex;flex-direction:column;gap:1.5rem}
+.bloco-resumo{background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);padding:1.8rem;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.1)}
+.titulo-bloco{color:#333;font-size:1.3rem;margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:3px solid #667eea}
+.texto-bloco{color:#444;line-height:1.8;margin-bottom:1rem}
+.mnemonic-box{background:rgba(255,255,255,.8);padding:1rem;border-radius:10px;border-left:4px solid #764ba2;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.label-mnemonic{font-weight:bold;color:#764ba2}
+.texto-mnemonic{color:#333;font-style:italic}
+.mapa-mental{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+.nodo-central{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;font-size:1.8rem;font-weight:bold;padding:1.5rem 3rem;border-radius:50px;box-shadow:0 10px 30px rgba(102,126,234,.4);animation:pulse 2s infinite}
+.ramos-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;width:100%}
+.ramo{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 5px 20px rgba(0,0,0,.1);border:3px solid;transition:all .3s}
+.ramo:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.titulo-ramo{padding:1.2rem;color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;user-select:none}
+.subramos{padding:.8rem;background:#f9f9f9;animation:slideDown .3s}
+.subramo{background:#fff;margin-bottom:.8rem;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.nome-subramo{padding:.8rem 1rem;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff;font-weight:bold;cursor:pointer;user-select:none}
+.detalhes-subramo{padding:1rem;background:#fff;animation:slideDown .3s}
+.detalhes-subramo p{margin-bottom:.5rem;line-height:1.6;color:#444}
+.container-flashcards{display:flex;flex-direction:column;align-items:center}
+.contador-cards,.contador-questoes{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:.4rem 1.5rem;border-radius:20px;margin-bottom:1.5rem;font-weight:bold;text-align:center;display:inline-block}
+.flashcard{width:100%;max-width:580px;height:380px;perspective:1000px;margin-bottom:1.5rem;cursor:pointer;position:relative}
+.face-frente,.face-verso{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;padding:2rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;transition:transform .6s}
+.face-frente{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;transform:rotateY(0deg)}
+.face-verso{background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);color:#fff;transform:rotateY(180deg)}
+.flashcard.virado .face-frente{transform:rotateY(-180deg)}
+.flashcard.virado .face-verso{transform:rotateY(0deg)}
+.face-frente h3,.face-verso h3{font-size:1.1rem;margin-bottom:1rem;opacity:.8}
+.face-frente p,.face-verso p{font-size:1.2rem;line-height:1.6;white-space:pre-line}
+.dica-card,.memo-card{margin-top:1rem;padding:.8rem;background:rgba(255,255,255,.2);border-radius:10px;font-size:.9rem;width:100%}
+.dica-card{font-style:italic}
+.botoes-flashcard{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
+.btn-nao-sabia{background:#ff6b6b;color:#fff;border:none;padding:.8rem 1.5rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s}
+.btn-nao-sabia:hover{background:#ff5252;transform:translateY(-2px)}
+.btn-sabia{background:#51cf66;color:#fff;border:none;padding:.8rem 1.5rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s}
+.btn-sabia:hover{background:#40c057;transform:translateY(-2px)}
+.btn-revisar{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff;border:none;padding:.8rem 1.5rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s;margin-top:.5rem}
+.btn-revisar:hover{transform:translateY(-2px)}
+.input-busca{width:100%;padding:1.2rem;border:3px solid #667eea;border-radius:15px;font-size:1.1rem;margin-bottom:1.5rem;transition:all .3s}
+.input-busca:focus{outline:none;box-shadow:0 0 20px rgba(102,126,234,.3)}
+.resultados-busca{display:flex;flex-direction:column;gap:1.2rem}
+.info-busca{text-align:center;color:#666;padding:2rem;font-size:1.1rem}
+.resultado-item{background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);padding:1.2rem;border-radius:15px}
+.resultado-item h3{color:#333;margin-bottom:.8rem}
+.resultado-item p{color:#444;line-height:1.6;margin-bottom:.4rem}
+.questao-box{background:#f9f9f9;padding:1.5rem;border-radius:15px;margin-bottom:1.5rem}
+.pergunta-questao,.afirmacao{font-size:1.2rem;color:#333;margin-bottom:1.5rem;line-height:1.6}
+.alternativas{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.5rem}
+.alternativa{background:#fff;padding:1.2rem;border-radius:10px;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all .3s;border:2px solid transparent}
+.alternativa:hover:not(.respondida){transform:translateX(5px);box-shadow:0 5px 15px rgba(0,0,0,.1)}
+.alternativa.selecionada{border-color:#667eea;background:#f0f4ff}
+.alternativa.correta{border-color:#51cf66;background:#ebfbee}
+.alternativa.incorreta{border-color:#ff6b6b;background:#ffe0e0}
+.letra-alternativa{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;font-size:.9rem}
+.texto-alternativa{flex:1;color:#333}
+.botoes-questao{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem}
+.botoes-ce{display:flex;gap:1.5rem;justify-content:center;margin-bottom:1.5rem}
+.btn-ce{flex:1;max-width:180px;padding:1.5rem;border:3px solid #ddd;background:#fff;border-radius:15px;font-size:1.1rem;font-weight:bold;cursor:pointer;transition:all .3s}
+.btn-ce:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
+.btn-ce.selecionado{border-color:#667eea;background:#f0f4ff}
+.btn-ce.correto{border-color:#51cf66;background:#ebfbee}
+.btn-ce.incorreto{border-color:#ff6b6b;background:#ffe0e0}
+.btn-primario{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;padding:.8rem 1.8rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s;font-size:.95rem}
+.btn-primario:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}
+.btn-primario:disabled{opacity:.5;cursor:not-allowed}
+.btn-secundario{background:#fff;color:#667eea;border:2px solid #667eea;padding:.8rem 1.8rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s;font-size:.95rem}
+.btn-secundario:hover:not(:disabled){background:#667eea;color:#fff;transform:translateY(-2px)}
+.btn-secundario:disabled{opacity:.5;cursor:not-allowed}
+.btn-perigo{background:#ff6b6b;color:#fff;border:none;padding:.8rem 1.8rem;border-radius:10px;cursor:pointer;font-weight:bold;transition:all .3s}
+.btn-perigo:hover{background:#ff5252;transform:translateY(-2px)}
+.dica-box{background:linear-gradient(135deg,#ffeaa7 0%,#fdcb6e 100%);padding:1rem;border-radius:10px;margin-top:1rem;color:#333;font-weight:bold}
+.explicacao-box{padding:1.5rem;border-radius:10px;margin-top:1rem}
+.explicacao-box.acerto{background:linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%)}
+.explicacao-box.erro{background:linear-gradient(135deg,#ffeaa7 0%,#fdcb6e 100%)}
+.explicacao-box h4{margin-bottom:.8rem;font-size:1.1rem}
+.explicacao-box p{margin-bottom:.5rem;line-height:1.6}
+.memo-box{background:rgba(255,255,255,.7);padding:.8rem;border-radius:8px;margin-top:.8rem}
+.navegacao-questoes{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.textarea-resposta{width:100%;padding:1rem;border:2px solid #667eea;border-radius:10px;font-size:1rem;min-height:100px;resize:vertical;margin-bottom:1rem;font-family:inherit;transition:all .3s}
+.textarea-resposta:focus{outline:none;box-shadow:0 0 15px rgba(102,126,234,.3)}
+.input-resposta{width:100%;padding:.8rem 1rem;border:2px solid #667eea;border-radius:10px;font-size:1rem;margin-bottom:1rem;font-family:inherit;transition:all .3s}
+.input-resposta:focus{outline:none;box-shadow:0 0 15px rgba(102,126,234,.3)}
+.correlacao-container{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.correlacao-col h4{font-size:1rem;color:#667eea;margin-bottom:.8rem;font-weight:bold}
+.correlacao-item{background:#fff;border:2px solid #ddd;padding:.8rem 1rem;border-radius:10px;margin-bottom:.6rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.8rem}
+.correlacao-item:hover{border-color:#667eea;background:#f0f4ff}
+.correlacao-item.selecionado{border-color:#667eea;background:#f0f4ff}
+.correlacao-item.correto{border-color:#51cf66;background:#ebfbee}
+.correlacao-item.incorreto{border-color:#ff6b6b;background:#ffe0e0}
+.num-correlacao{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;font-size:.9rem}
+.input-numero{width:50px;padding:.3rem;border:2px solid #ddd;border-radius:6px;text-align:center;font-size:1rem;font-weight:bold}
+.badge-resposta{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:.3rem .8rem;border-radius:20px;font-size:.85rem;font-weight:bold}
+.badge-correto{background:#51cf66}
+.badge-incorreto{background:#ff6b6b}
+.resultado-final{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:2rem;border-radius:20px;text-align:center;margin-top:1.5rem}
+.resultado-final h2{font-size:2rem;margin-bottom:.5rem}
+.resultado-final p{font-size:1.2rem;opacity:.9}
+.questoes-erradas{margin-top:1rem}
+.questao-errada-item{background:rgba(255,255,255,.2);padding:1rem;border-radius:10px;margin-bottom:.8rem;text-align:left;font-size:.9rem}
+.rodape{background:rgba(255,255,255,.95);padding:1.2rem;text-align:center;color:#666;box-shadow:0 -2px 20px rgba(0,0,0,.1);font-size:.9rem}
+.flip-hint{font-size:.85rem;opacity:.7;margin-top:.5rem}
+.tag-exercicio{display:inline-block;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:#fff;padding:.2rem .8rem;border-radius:20px;font-size:.8rem;font-weight:bold;margin-bottom:1rem}
+.progresso-barra-container{background:#eee;border-radius:10px;height:8px;margin-bottom:1.5rem;overflow:hidden}
+.progresso-barra{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100%;border-radius:10px;transition:width .5s}
+.resposta-usuario{background:rgba(255,255,255,.5);border:2px dashed rgba(255,255,255,.6);padding:.8rem;border-radius:8px;margin-bottom:.5rem;font-style:italic}
+.gabarito-box{background:rgba(255,255,255,.7);padding:1rem;border-radius:10px;margin-top:.5rem;color:#333}
+.gabarito-box strong{color:#667eea}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes slideDown{from{opacity:0;max-height:0}to{opacity:1;max-height:2000px}}
+@media(max-width:768px){
+  .navbar{flex-direction:column}.nav-links{width:100%;justify-content:center}
+  .nav-links button{font-size:.75rem;padding:.35rem .6rem}
+  .titulo-principal{font-size:1.6rem}
+  .cards-inicio{grid-template-columns:repeat(2,1fr)}
+  .flashcard{height:320px}
+  .botoes-ce{flex-direction:column;align-items:center}
+  .btn-ce{max-width:100%}
+  .correlacao-container{grid-template-columns:1fr}
+  .conteudo-principal{padding:1rem}
+}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ==================== DADOS ====================
+const conteudoCompleto = {
+  superResumo: [
+    "🎯 FATORES DA LIDERANÇA: Líder, Liderados, Situação e Comunicação",
+    "🎭 EIXOS DE LIDERANÇA: Centralização de Poder, Tipo de Incentivo, Foco do Líder",
+    "📊 ESTILOS (Centralização): Centralizadora, Participativa, Delegativa",
+    "💡 ESTILOS (Incentivo): Transformacional, Transacional",
+    "🎯 ESTILOS (Foco): Orientada para Tarefa, Orientada para Relacionamento",
+    "🧠 PERSONALIDADE: Resultante psicofísica da hereditariedade + meio",
+    "🌡️ TEMPERAMENTO: Sanguíneo, Melancólico, Colérico, Fleumático",
+    "🆔 ID, EGO, SUPEREGO: Instintos, Reflexão/Consciência, Consciência Moral",
+    "📈 NÍVEIS: Líderes Diretos, Organizacionais, Estratégicos",
+    "🔥 BURNOUT: Exaustão emocional, estresse no trabalho, falta de energia",
+    "🪟 JANELA DE JOHARI: Área Aberta, Cega, Secreta, Desconhecida",
+    "🎓 ATRIBUTOS DO LÍDER: Altruísmo, Flexibilidade, Comunicação, Iniciativa",
+    "🔄 MÉTODOS DE ATITUDE: Direto e Indireto",
+    "🎭 MODOS DE AGIR: Ditador, Tirano, Líder, Comandante",
+    "💪 INTELIGÊNCIA EMOCIONAL: Autoconsciência, Controle, Automotivação, Empatia, Relacionamento"
+  ],
+  resumoCompleto: {
+    "Fatores da Liderança": { conteudo: "São 4 fatores fundamentais: 1) LÍDER - pessoa que detém a arte de se destacar e influenciar a conduta humana; 2) LIDERADOS - equipe do líder, conhecimento essencial para exercício da liderança; 3) SITUAÇÃO - não existem fórmulas, o líder precisa compreender a dinâmica e aplicar conhecimentos como guia; 4) COMUNICAÇÃO - processo essencial de troca de ordens, informações e ideias.", mnemonic: "LLSC - 'Líderes Lideram Situações Comunicando'" },
+    "Liderança Militar": { conteudo: "É o processo que consiste em influenciar pessoas, no sentido que ajam, voluntariamente, em prol do cumprimento da missão. Duas vias para influenciar: INTELECTUAL (razão, lógica) e EMOCIONAL (sentimentos, valores).", mnemonic: "IE - 'Intelecto + Emoção = Influência'" },
+    "Eixos do Estilo de Liderança": { conteudo: "Os 3 grandes eixos são: 1) GRAU DE CENTRALIZAÇÃO DE PODER; 2) TIPO DE INCENTIVO; 3) FOCO DO LÍDER. Cada eixo possui diferentes estilos que o líder pode adotar conforme a situação.", mnemonic: "CIF - 'Centralização, Incentivo, Foco'" },
+    "Grau de Centralização": { conteudo: "LIDERANÇA CENTRALIZADORA - alta concentração de poder; LIDERANÇA PARTICIPATIVA - condicionado por características pessoais, conhecimento técnico e engajamento; LIDERANÇA DELEGATIVA - transferência de responsabilidades.", mnemonic: "CPD - 'Centro, Participa, Delega'" },
+    "Tipo de Incentivo": { conteudo: "LIDERANÇA TRANSFORMACIONAL - inspira e motiva além dos interesses imediatos; LIDERANÇA TRANSACIONAL - apela aos interesses e necessidades primárias, baseada em trocas econômicas ou psicológicas.", mnemonic: "TT - 'TransForma ou TransAção'" },
+    "Foco do Líder": { conteudo: "ORIENTADA PARA TAREFA - foco na execução e resultados; ORIENTADA PARA RELACIONAMENTO - foco na manutenção e fortalecimento das relações pessoais, útil em tensão, frustração e desmotivação.", mnemonic: "TR - 'Tarefa ou Relacionamento'" },
+    "Personalidade": { conteudo: "É a resultante psicofísica da interação da hereditariedade com o meio, manifestada através do comportamento. Características: TEMPORAL, depende de traços inatos e hereditários, é síntese única. TIPOS: Ajustada e Desajustada. Personalidade Compulsiva: transtorno com sentimento de dúvida, perfeccionismo, verificações excessivas.", mnemonic: "PHM - 'Psico + Herança + Meio = Personalidade'" },
+    "Temperamento": { conteudo: "É a combinação de características inatas herdadas que afetam inconscientemente o comportamento. Segundo Hipócrates, 4 temperamentos básicos: SANGUÍNEO (alegre, otimista), MELANCÓLICO (triste, pessimista), COLÉRICO (irritado, explosivo), FLEUMÁTICO (calmo, apático).", mnemonic: "SMCF - 'Sangue, Mel, Cólera, Fleuma'" },
+    "Id, Ego e Superego": { conteudo: "ID - instintos primitivos, impulsos inconscientes; EGO - reflexão, consciência da própria personalidade, encontra meio de satisfazer emocionalmente os impulsos; SUPEREGO - 'consciência moral', resposta automática certa ou errada diante de situações.", mnemonic: "IES - 'Instinto, Equilíbrio, Social (moral)'" },
+    "Níveis de Liderança": { conteudo: "LÍDERES DIRETOS - primeira linha, subordinados veem chefes frequentemente (seções, pelotões, esquadras); LÍDERES ORGANIZACIONAIS - influência basicamente indireta, através de staff e comandantes subordinados; LÍDERES ESTRATÉGICOS - níveis mais elevados, influência ainda mais indireta e distante.", mnemonic: "DOE - 'Direto, Organizacional, Estratégico'" },
+    "Síndrome de Burnout": { conteudo: "Esgotamento nervoso com características: EXAUSTÃO EMOCIONAL, ESTRESSE LIGADO AO TRABALHO, FALTA DE ENERGIA. É resultado de sobrecarga prolongada no trabalho.", mnemonic: "EEE - 'Exaustão, Estresse, Energia zero'" },
+    "Janela de Johari": { conteudo: "Modelo de autoconhecimento com 4 áreas: ÁREA ABERTA (conhecido por mim e pelos outros), ÁREA CEGA (desconhecido por mim, conhecido pelos outros), ÁREA SECRETA (conhecido por mim, desconhecido pelos outros), ÁREA DESCONHECIDA (desconhecido por todos).", mnemonic: "ACSD - 'Aberta, Cega, Secreta, Desconhecida'" },
+    "Atributos do Líder": { conteudo: "ALTRUÍSMO - se colocar no lugar dos liderados; FLEXIBILIDADE - maleabilidade de ideias, adaptar-se; CAPACIDADE DE RELACIONAMENTO INTERPESSOAL - lidar com pessoas com tato e respeito; INICIATIVA - ânimo para conceber e executar; + ENTUSIASMO, CAPACIDADE DECISÓRIA, AUTOCONFIANÇA, EXEMPLO, INTEGRIDADE ÉTICA, COMUNICAÇÃO, SENSO DE JUSTIÇA.", mnemonic: "AFRICE - 'Altruísmo, Flexibilidade, Relacionamento, Iniciativa, Comunicação, Ética'" },
+    "Métodos de Modificação de Atitude": { conteudo: "Existem dois métodos: DIRETO - atua diretamente sobre a pessoa; INDIRETO - trabalha através de influências externas ao indivíduo.", mnemonic: "DI - 'Direto ou Indireto'" },
+    "Modo de Agir dos Líderes": { conteudo: "O modo de agir é muito pessoal, subordinado às peculiaridades individuais, traços primários e tendências. Classificações: DITADOR (impõe pela força), TIRANO (oprime), LÍDER (influencia positivamente), COMANDANTE (guia com autoridade).", mnemonic: "DTLC - 'Ditador, Tirano, Líder, Comandante'" },
+    "Processos de Influenciação": { conteudo: "9 aspectos inerentes: MOTIVAÇÃO, AFIRMAÇÃO, SUGESTÃO, EXEMPLO, EXORTAÇÃO, ARGUMENTAÇÃO, PUBLICIDADE, EFEITO DA ATMOSFERA, PRESTÍGIO.", mnemonic: "MASEAPEP - 9 formas positivas de influenciar" },
+    "Inteligência Emocional": { conteudo: "5 pilares: AUTOCONSCIÊNCIA (conhecer-se), CONTROLAR AS EMOÇÕES (gerenciar-se), AUTOMOTIVAÇÃO (motivar-se), EMPATIA (entender outros), CAPACIDADE DE SE RELACIONAR (conectar-se).", mnemonic: "ACCER - 'AutoConsciência, Controle, automotivação, Empatia, Relacionamento'" },
+    "Liderança Situacional": { conteudo: "Não existe um melhor estilo de liderança. Líderes eficazes utilizam estilos diferentes em distintos cenários. Depende da personalidade do líder, desenvolvimento do liderado, características da equipe, situação e cultura organizacional.", mnemonic: "PEDSC - 'Personalidade, Equipe, Desenvolvimento, Situação, Cultura'" },
+    "Tipos de Incentivo": { conteudo: "Três tipos: MATERIAIS (salário, benefícios, bônus), SEMI-MATERIAIS (promoções, condições de trabalho, privilégios), IMATERIAIS (reconhecimento, elogios, prestígio).", mnemonic: "MSI - 'Material, Semi, Imaterial' (do concreto ao abstrato)" },
+    "Motivo": { conteudo: "É uma condição interna que leva o indivíduo a agir e persistir em um dado comportamento, visando um determinado objetivo. MOTIVO = MOTOR INTERNO.", mnemonic: "CIA - 'Condição Interna para Ação'" },
+    "Rosa das Virtudes": { conteudo: "INICIATIVA - ânimo pronto para conceber e executar; DISCIPLINA - cumprimento das normas; HONRA - valores morais elevados. As virtudes são valores morais vividos em atos.", mnemonic: "IDH - 'Iniciativa, Disciplina, Honra'" }
+  },
+  questoesPadrao: [
+    {id:1,pergunta:"Quais são os fatores da liderança?",alternativas:["Situação, Comunicação, Líder e Chefe","Autoritário, delegação, competência","Líder e chefe","Líder, Liderados, Situação e Comunicação"],correta:3,explicacao:"Os 4 fatores da liderança são: Líder, Liderados, Situação e Comunicação",dica:"LLSC - 4 elementos: L, L, S e C"},
+    {id:2,pergunta:"É a pessoa que, investida ou não da função de mando, detém a arte de se destacar (proeminência) e influenciar a conduta humana, conseguindo obediência voluntária, respeito e leal cooperação.",alternativas:["Líder","Liderado","Comunicação","Situação"],correta:0,explicacao:"LÍDER - pessoa que se destaca e influencia",dica:"Quem tem a 'arte de se destacar' é o LÍDER"},
+    {id:3,pergunta:"\"É a equipe do líder.\" O conhecimento dos liderados é fator essencial para o exercício da liderança e depende do entendimento claro da natureza humana, das suas necessidades, emoções e motivações.",alternativas:["Líder","Liderado","Comunicação","Situação"],correta:1,explicacao:"LIDERADO é a equipe do líder, conhecê-los é essencial",dica:"A 'equipe' são os liderados"},
+    {id:4,pergunta:"\"Não existem normas nem fórmulas que mostrem com exatidão o que deve ser feito. O líder precisa compreender a dinâmica do processo de liderança...\"",alternativas:["Líder","Liderado","Comunicação","Situação"],correta:3,explicacao:"SITUAÇÃO - não há fórmulas, cada situação é única",dica:"Cada 'situação' é particular e exige adaptação"},
+    {id:5,pergunta:"É um processo essencial à liderança, que consiste na troca de ordens, informações e ideias, só ocorrendo quando a mensagem é recebida e compreendida.",alternativas:["Líder","Liderado","Comunicação","Situação"],correta:2,explicacao:"COMUNICAÇÃO é a troca de informações",dica:"'Troca de ordens e informações' = Comunicação"},
+    {id:6,pergunta:"É o processo que consiste em influenciar pessoas, no sentido que ajam, voluntariamente, em prol do cumprimento da missão.",alternativas:["Liderança Militar","Delegação","Competência","Liderança Participativa"],correta:0,explicacao:"LIDERANÇA MILITAR - influenciar voluntariamente para cumprir missão",dica:"Influenciar para 'cumprimento da missão' = contexto militar"},
+    {id:7,pergunta:"Vias para influenciar pessoas:",alternativas:["Intelectual e emocional","Autoritarismo e conveniência","Servir","Inspirar"],correta:0,explicacao:"As duas vias são INTELECTUAL (razão) e EMOCIONAL (sentimentos)",dica:"Cabeça (intelectual) e Coração (emocional)"},
+    {id:8,pergunta:"São os 03 grandes eixos do estilo de Liderança:",alternativas:["Informação, comunicação e situação","Grau de centralização de Poder, tipo de Incentivo, foco do Líder","Correção, delegação e informação","Punição, tipo de incentivo e foco do líder"],correta:1,explicacao:"Os 3 eixos são: Centralização, Incentivo e Foco - CIF",dica:"CIF - Centralização, Incentivo, Foco"},
+    {id:9,pergunta:"Quanto ao grau de centralização:",alternativas:["Liderança Centralizadora, Participativa e Delegativa","Liderança Transformacional e Transacional","Correção, delegação e informação","Liderança orientada para Tarefa e Relacionamento"],correta:0,explicacao:"Centralização: Centralizadora, Participativa, Delegativa - CPD",dica:"CPD - Centro, Participa, Delega"},
+    {id:10,pergunta:"Quanto ao tipo de Incentivo:",alternativas:["Liderança Centralizadora, Participativa e Delegativa","Liderança Transformacional e Transacional","Correção, delegação e informação","Liderança orientada para Tarefa e Relacionamento"],correta:1,explicacao:"Incentivo: Transformacional e Transacional - TT",dica:"TT - Transforma ou Troca"},
+    {id:11,pergunta:"Quanto ao foco do Líder:",alternativas:["Liderança Centralizadora, Participativa e Delegativa","Liderança Transformacional e Transacional","Correção, delegação e informação","Liderança orientada para Tarefa e Relacionamento"],correta:3,explicacao:"Foco: Tarefa (fazer) ou Relacionamento (pessoas) - TR",dica:"TR - Tarefa ou Relacionamento"},
+    {id:12,pergunta:"É condicionado pelas características pessoais, pelo conhecimento técnico-profissional e pelo engajamento e motivação dos componentes do grupo como um todo. Na ausência do líder, uma boa equipe terá condições de continuar agindo de acordo com o planejamento.",alternativas:["Liderança Centralizadora","Liderança Transformacional","Liderança Participativa","Liderança Delegativa"],correta:2,explicacao:"LIDERANÇA PARTICIPATIVA - equipe preparada age mesmo sem líder",dica:"Equipe 'participa' e pode continuar sozinha"},
+    {id:13,pergunta:"O foco do líder é a manutenção e fortalecimento das relações pessoais e do próprio grupo. Esse estilo pode ser útil em situações de tensão, frustração, insatisfação e desmotivação do grupo.",alternativas:["Liderança Centralizadora","Liderança Transformacional","Liderança orientada para Relacionamento","Liderança Delegativa"],correta:2,explicacao:"ORIENTADA PARA RELACIONAMENTO - foco em pessoas e relações",dica:"Foco em 'relações pessoais' = Relacionamento"},
+    {id:14,pergunta:"É a resultante psicofísica da interação da hereditariedade com o meio, manifestada através do comportamento, cujas características são peculiares a cada pessoa:",alternativas:["Caráter","Personalidade","Id, EGO e SUPEREGO","Todas as respostas acima estão corretas"],correta:1,explicacao:"PERSONALIDADE = Herança + Meio, manifestada no comportamento",dica:"PHM - Psico + Herança + Meio"},
+    {id:15,pergunta:"Área cega, área aberta, área secreta e área desconhecida, estamos falando:",alternativas:["Liderança democrática","Papel e status do líder","Janela de Johari","Aspectos da liderança"],correta:2,explicacao:"JANELA DE JOHARI tem 4 áreas: Aberta, Cega, Secreta, Desconhecida",dica:"ACSD - Aberta, Cega, Secreta, Desconhecida"},
+    {id:16,pergunta:"Apela aos interesses e, especialmente, às necessidades primárias dos seguidores para alcançar os resultados organizacionais desejados. Fundamentada em uma relação de troca de natureza econômica ou psicológica.",alternativas:["Liderança orientada para a tarefa","Liderança Transformacional","Liderança Transacional","Todas as respostas acima estão corretas"],correta:2,explicacao:"LIDERANÇA TRANSACIONAL baseia-se em TROCA",dica:"TRANS-acional = TROCAs"},
+    {id:17,pergunta:"\"A influência dos ___ é basicamente indireta: eles expedem suas políticas e diretivas e incentivam seus liderados por meio de seu staff e comandantes subordinados.\"",alternativas:["Líderes organizacionais","Líderes diretos","Líderes estratégicos","Líderes centralizadores"],correta:0,explicacao:"LÍDERES ORGANIZACIONAIS têm influência INDIRETA via staff",dica:"ORGANIZA-cionais = influência através da organização"},
+    {id:18,pergunta:"Em relação aos atributos do Líder, a capacidade de se colocar no lugar dos liderados, preocupando-se com bem-estar pessoal e profissional destes:",alternativas:["Altruísmo","Flexibilidade","Respeito","Capacidade de relacionamento interpessoal"],correta:0,explicacao:"ALTRUÍSMO = colocar-se no lugar do outro (empatia)",dica:"ALTER = outro | ALTRU-ísmo = pensar no outro"},
+    {id:19,pergunta:"\"___ exercem sua liderança no âmbito dos níveis mais elevados da instituição. Sua influência é ainda mais indireta e distante do que a dos líderes organizacionais.\"",alternativas:["Líderes participativos","Líderes estratégicos","Líderes diretos","Líderes centralizadores"],correta:1,explicacao:"LÍDERES ESTRATÉGICOS são os mais elevados e indiretos",dica:"ESTRATÉ-gicos = topo da estratégia"},
+    {id:20,pergunta:"Em relação aos processos de influenciação, são os aspectos inerentes:",alternativas:["Desmotivação, afirmação, sugestão, exemplo, exortação, argumentação, publicidade, efeito da atmosfera, prestígio","Motivação, afirmação, sugestão, exemplo, exortação, argumentação, publicidade, efeito da atmosfera, prestígio","Motivação, afirmação, sugestão, exemplo, exortação, argumentação, restringir, efeito da atmosfera, prestígio","Motivação, afirmação, sugestão, exemplo, exortação, argumentação, publicidade, atmosfera pessimista, prestígio"],correta:1,explicacao:"9 aspectos: Motivação, Afirmação, Sugestão, Exemplo, Exortação, Argumentação, Publicidade, Efeito da atmosfera, Prestígio",dica:"MASEAPEP - 9 aspectos positivos"},
+    {id:21,pergunta:"\"Os ___ devem possuir muitas habilidades interpessoais, conceituais, técnicas e táticas. Usam a ética para pautar suas condutas.\"",alternativas:["Líderes delegativos","Líderes organizacionais","Líderes diretos","Líderes estratégicos"],correta:2,explicacao:"LÍDERES DIRETOS precisam de múltiplas habilidades práticas",dica:"DIRETOS = contato direto, mais habilidades práticas"},
+    {id:22,pergunta:"Segundo Hipócrates, os temperamentos básicos são:",alternativas:["SANGUÍNEO e MELANCÓLICO","COLÉRICO","FLEUMÁTICO","Todas as respostas acima estão corretas"],correta:3,explicacao:"4 temperamentos: Sanguíneo, Melancólico, Colérico, Fleumático",dica:"SMCF - 4 letras = 4 temperamentos"},
+    {id:23,pergunta:"A PERSONALIDADE é:",alternativas:["Temporal","Depende de certos traços inatos e hereditários","É uma síntese única, distinguindo cada ser humano de seus semelhantes","Todas as respostas acima"],correta:3,explicacao:"Personalidade: temporal, hereditária E única - TODAS as características",dica:"Personalidade tem TODAS essas características"},
+    {id:24,pergunta:"\"É a combinação de características inatas que herdamos dos nossos pais que, de forma inconsciente, afetam o nosso comportamento.\"",alternativas:["Temperamento","Caráter","Personalidade","Liderança"],correta:0,explicacao:"TEMPERAMENTO = características INATAS herdadas",dica:"TEMPER-amento = aquilo com que nascemos (inato)"},
+    {id:25,pergunta:"\"É a reflexão, é a consciência da própria personalidade. Sua função é encontrar um meio de satisfazer emocionalmente os impulsos.\"",alternativas:["ID","Superego","Personalidade","EGO"],correta:3,explicacao:"EGO = reflexão, consciência, EQUILIBRA id e superego",dica:"EGO = Eu consciente, equilíbrio entre impulsos e moral"},
+    {id:26,pergunta:"São os tipos de personalidade:",alternativas:["Normal e participativa","Delegativa e desajustada","Competitiva e regular","Ajustada e desajustada"],correta:3,explicacao:"2 tipos de personalidade: AJUSTADA e DESAJUSTADA",dica:"A-D: Ajustada ou Desajustada"},
+    {id:27,pergunta:"É um transtorno de personalidade caracterizado por um constante sentimento de dúvida, perfeccionismo, escrupulosidade, verificações, e preocupação excessiva com pormenores:",alternativas:["Personalidade perversa","Personalidade compulsiva","Personalidade dependente","Personalidade explosiva"],correta:1,explicacao:"Personalidade COMPULSIVA = dúvida, perfeccionismo, verificações excessivas",dica:"COM-pulsiva = compulsão por verificar"},
+    {id:28,pergunta:"Uma condição interna que leva o indivíduo a agir e persistir em um dado comportamento, visando um determinado objetivo.",alternativas:["Motivo","Incentivo","Liderança Participativa","Liderança Delegativa"],correta:0,explicacao:"MOTIVO = condição INTERNA que leva à ação",dica:"MOTIVO = MOTOR interno"},
+    {id:29,pergunta:"Tipos de incentivos capazes de estimular o indivíduo no trabalho:",alternativas:["Imateriais","Materiais","Semi-materiais","Todas as respostas acima"],correta:3,explicacao:"3 tipos: Materiais, Semi-materiais, Imateriais (MSI)",dica:"MSI - Material, Semi, Imaterial"},
+    {id:30,pergunta:"Síndrome de Burnout – Esgotamento nervoso - tem como características:",alternativas:["Exaustão emocional","Estresse ligado ao trabalho","Falta de energia","Todas as respostas acima"],correta:3,explicacao:"BURNOUT = Exaustão + Estresse + Falta de energia (EEE)",dica:"BURN-out = queimado = 3 E's"},
+    {id:31,pergunta:"Popularmente é chamado de \"consciência\" — representa a resposta automática, \"certa\" ou \"errada\", que surge na pessoa diante das várias situações que exigem uma tomada de posição:",alternativas:["ID","Superego","Personalidade","EGO"],correta:1,explicacao:"SUPEREGO = consciência moral, certo x errado",dica:"SUPER-ego = acima do ego = consciência moral"},
+    {id:32,pergunta:"São os principais atributos de um LÍDER:",alternativas:["Entusiasmo, Capacidade Decisória e Autoconfiança","Exemplo e Integridade Ética","Comunicação, Iniciativa e Senso de Justiça","Todas as respostas acima"],correta:3,explicacao:"Todos são atributos do líder - AFRICE+",dica:"AFRICE - múltiplos atributos essenciais"},
+    {id:33,pergunta:"AUTOCONSCIÊNCIA, CONTROLAR AS EMOÇÕES, AUTOMOTIVAÇÃO, EMPATIA E CAPACIDADE DE SE RELACIONAR, são os cinco pilares que podem nos ajudar a desenvolver a:",alternativas:["Liderança participativa","Liderança Centralizadora","ID, EGO e SUPEREGO","Inteligência Emocional"],correta:3,explicacao:"5 pilares da INTELIGÊNCIA EMOCIONAL: ACCER",dica:"ACCER - 5 dedos = 5 pilares"},
+    {id:34,pergunta:"Quais são os métodos que podem modificar o sistema de atitude dos indivíduos?",alternativas:["Servir e Punir","Liderar e Julgar","Intelectual e Emocional","Direto e Indireto"],correta:3,explicacao:"Métodos de modificação de atitude: DIRETO e INDIRETO",dica:"DI - Direto ou Indireto"},
+    {id:35,pergunta:"\"Essa é a primeira linha de liderança e ocorre em organizações onde os subordinados estão acostumados a ver seus chefes frequentemente: seções, pelotões e esquadras.\" Qual nível de liderança?",alternativas:["Liderança Organizacional","Liderança Estratégica","Liderança Participativa","Liderança Direta"],correta:3,explicacao:"LIDERANÇA DIRETA = primeira linha, contato frequente",dica:"DIRETA = ver DIRETAMENTE, frequentemente"},
+    {id:36,pergunta:"Em relação aos atributos do Líder: \"A habilidade para lidar com pessoas, sejam superiores, pares ou subordinados, com tato, respeito e consideração individualizada\":",alternativas:["Capacidade decisória","Capacidade de relacionamento interpessoal","Comunicação","Humildade"],correta:1,explicacao:"CAPACIDADE DE RELACIONAMENTO INTERPESSOAL = lidar com pessoas com tato",dica:"Relacionamento INTER-pessoal = entre pessoas"},
+    {id:37,pergunta:"Em relação aos atributos do Líder: \"Maleabilidade de ideias e habilidade para integrar informações novas, adaptar-se a mudanças. Ele atua corretamente de modo diverso em diferentes situações.\"",alternativas:["Coragem física","Capacidade de relacionamento interpessoal","Flexibilidade","Autocontrole"],correta:2,explicacao:"FLEXIBILIDADE = maleabilidade, adaptar-se",dica:"FLEXÍVEL = dobra, adapta"},
+    {id:38,pergunta:"\"É a combinação de características inatas que herdamos dos nossos pais que, de forma inconsciente, afetam o nosso comportamento.\" Estamos falando de:",alternativas:["Inteligência emocional","Temperamento","Caráter","Personalidade"],correta:1,explicacao:"TEMPERAMENTO = características INATAS herdadas",dica:"INATAS = nasce com = temperamento"},
+    {id:39,pergunta:"Como são classificados os MODOS DE AGIR DOS LÍDERES?",alternativas:["Ditador e Tirano","Líder","Comandante","Todas as respostas acima"],correta:3,explicacao:"Modos: Ditador, Tirano, Líder, Comandante - DTLC",dica:"DTLC - do pior ao melhor"},
+    {id:40,pergunta:"\"Não existe um melhor Estilo de Liderança. Os líderes eficazes utilizam estilos diferentes, em distintos cenários.\" Essa é a teoria da:",alternativas:["Liderança Situacional","Liderança Participativa","Liderança Transformacional","Liderança Delegativa"],correta:0,explicacao:"LIDERANÇA SITUACIONAL - adaptar estilo à situação",dica:"PEDSC - Personalidade, Equipe, Desenvolvimento, Situação, Cultura"}
+  ],
+  flashcards: [
+    {frente:"Quais são os 4 fatores da liderança?",verso:"1) Líder - arte de se destacar\n2) Liderados - equipe do líder\n3) Situação - cada caso é único\n4) Comunicação - troca de informações",dica:"LLSC",memorização:"Visualize um LÍDER com sua EQUIPE em uma SITUAÇÃO COMUNICANDO"},
+    {frente:"O que é Liderança Militar?",verso:"Processo de influenciar pessoas para que ajam VOLUNTARIAMENTE em prol do cumprimento da MISSÃO",dica:"Voluntária + Missão",memorização:"Influência militar = ação voluntária + missão cumprida"},
+    {frente:"Quais os 3 eixos do estilo de liderança?",verso:"1) Grau de CENTRALIZAÇÃO de Poder\n2) Tipo de INCENTIVO\n3) FOCO do Líder",dica:"CIF",memorização:"3 botões de controle: onde está o PODER, que PRÊMIO oferece, onde está a ATENÇÃO"},
+    {frente:"Estilos quanto à CENTRALIZAÇÃO?",verso:"CENTRALIZADORA - concentra poder\nPARTICIPATIVA - envolve equipe\nDELEGATIVA - transfere responsabilidade",dica:"CPD",memorização:"Centro, Participa, Delega"},
+    {frente:"Estilos quanto ao INCENTIVO?",verso:"TRANSFORMACIONAL - inspira, motiva, transforma\nTRANSACIONAL - troca, recompensas, necessidades básicas",dica:"TT",memorização:"TransFORMA pessoas vs TransAÇÃO comercial"},
+    {frente:"Estilos quanto ao FOCO?",verso:"ORIENTADA PARA TAREFA - resultado, execução\nORIENTADA PARA RELACIONAMENTO - pessoas, clima, motivação",dica:"TR",memorização:"FAZER coisas vs CUIDAR de pessoas"},
+    {frente:"O que é PERSONALIDADE?",verso:"Resultante PSICOFÍSICA da interação HEREDITARIEDADE + MEIO, manifestada no COMPORTAMENTO. É única para cada pessoa.",dica:"PHM",memorização:"P = H × M (Personalidade = Herança vezes Meio)"},
+    {frente:"O que é TEMPERAMENTO?",verso:"Combinação de características INATAS HERDADAS que afetam INCONSCIENTEMENTE o comportamento",dica:"TEMPER = aquilo com que nascemos",memorização:"TEMPERAMENTO já vem de fábrica (nascemos com ele)"},
+    {frente:"4 Temperamentos de Hipócrates?",verso:"SANGUÍNEO - alegre, otimista\nMELANCÓLICO - triste, pessimista\nCOLÉRICO - irritado, explosivo\nFLEUMÁTICO - calmo, apático",dica:"SMCF",memorização:"4 líquidos corporais: sangue, mel, bile, fleuma"},
+    {frente:"O que são ID, EGO e SUPEREGO?",verso:"ID - instintos primitivos, impulsos\nEGO - reflexão, equilibra id e superego\nSUPEREGO - consciência moral, certo vs errado",dica:"IES",memorização:"ID quer, SUPEREGO julga, EGO decide"},
+    {frente:"3 Níveis de Liderança?",verso:"DIRETA - primeira linha, contato frequente\nORGANIZACIONAL - influência indireta via staff\nESTRATÉGICA - topo, muito indireta",dica:"DOE",memorização:"Soldado vê líder DIRETO, comandante é ORGANIZACIONAL, general é ESTRATÉGICO"},
+    {frente:"O que é Síndrome de Burnout?",verso:"Esgotamento nervoso com:\n- EXAUSTÃO emocional\n- ESTRESSE no trabalho\n- falta de ENERGIA",dica:"EEE",memorização:"BURN-out = QUEIMADO = 3 E's consumidos"},
+    {frente:"4 Áreas da Janela de Johari?",verso:"ABERTA - eu sei, outros sabem\nCEGA - eu não sei, outros sabem\nSECRETA - eu sei, outros não sabem\nDESCONHECIDA - ninguém sabe",dica:"ACSD",memorização:"Janela de 4 vidros: transparente, espelho, cortina, escuro"},
+    {frente:"Principais atributos do líder?",verso:"ALTRUÍSMO, FLEXIBILIDADE, RELACIONAMENTO, INICIATIVA, COMUNICAÇÃO, ÉTICA + Entusiasmo, Decisão, Autoconfiança, Exemplo, Senso de Justiça",dica:"AFRICE+",memorização:"AFRICE para ter sucesso na liderança"},
+    {frente:"Métodos de modificação de atitude?",verso:"DIRETO - atua diretamente NA PESSOA\nINDIRETO - influências externas",dica:"DI",memorização:"Conversa DIRETA vs influência INDIRETA do ambiente"},
+    {frente:"4 Modos de agir dos líderes?",verso:"DITADOR - impõe pela força\nTIRANO - oprime\nLÍDER - influencia positivamente\nCOMANDANTE - guia com autoridade",dica:"DTLC",memorização:"Do PIOR ao MELHOR: Ditador → Tirano → Comandante → Líder"},
+    {frente:"9 Processos de Influenciação?",verso:"MOTIVAÇÃO, AFIRMAÇÃO, SUGESTÃO, EXEMPLO, EXORTAÇÃO, ARGUMENTAÇÃO, PUBLICIDADE, EFEITO DA ATMOSFERA, PRESTÍGIO",dica:"MASEAPEP",memorização:"9 formas positivas de influenciar pessoas"},
+    {frente:"5 Pilares da Inteligência Emocional?",verso:"AUTOCONSCIÊNCIA - conhecer-se\nCONTROLAR EMOÇÕES - gerenciar-se\nAUTOMOTIVAÇÃO - motivar-se\nEMPATIA - entender outros\nRELACIONAR - conectar-se",dica:"ACCER",memorização:"5 dedos = 5 pilares = ACCER"},
+    {frente:"3 Tipos de Incentivo?",verso:"MATERIAIS - dinheiro, bens\nSEMI-MATERIAIS - promoções, condições\nIMATERIAIS - reconhecimento, elogios",dica:"MSI",memorização:"Do concreto ao abstrato: $ → cargo → elogio"},
+    {frente:"O que é MOTIVO?",verso:"Condição INTERNA que leva a AGIR e PERSISTIR visando um OBJETIVO",dica:"CIA",memorização:"MOTIVO = MOTOR INTERNO que impulsiona"},
+    {frente:"O que é Liderança Situacional?",verso:"NÃO existe melhor estilo. Líder eficaz ADAPTA estilo conforme: personalidade, liderado, equipe, situação, cultura",dica:"PEDSC",memorização:"Liderança = camaleão que muda conforme ambiente"},
+    {frente:"2 Tipos de Personalidade?",verso:"AJUSTADA - adaptada, equilibrada\nDESAJUSTADA - desadaptada, desequilibrada",dica:"A-D",memorização:"Peça AJUSTA ou DESAJUSTA na máquina"},
+    {frente:"O que é Personalidade Compulsiva?",verso:"Transtorno com: DÚVIDA constante, PERFECCIONISMO, VERIFICAÇÕES excessivas, preocupação com DETALHES",dica:"DPVD",memorização:"COM-pulsivo = compulsão por verificar tudo várias vezes"},
+    {frente:"O que é ALTRUÍSMO (atributo)?",verso:"Capacidade de se colocar no lugar dos liderados, preocupar-se com bem-estar pessoal e profissional",dica:"ALTER = outro",memorização:"ALTRU-ísmo = pensar no OUTRO primeiro"},
+    {frente:"O que é FLEXIBILIDADE (atributo)?",verso:"Maleabilidade de ideias, integrar informações novas, adaptar-se a mudanças, atuar diferente em situações distintas",dica:"FLEX = dobra",memorização:"Como elástico: estica, dobra, adapta sem quebrar"},
+    {frente:"O que é EGO (Freud)?",verso:"Reflexão, CONSCIÊNCIA da própria personalidade. Função: encontrar meio de satisfazer emocionalmente os impulsos. Árbitro entre ID e SUPEREGO.",dica:"EGO = EU consciente",memorização:"EGO = árbitro entre ID (quer) e SUPEREGO (deve)"},
+    {frente:"O que é SUPEREGO (Freud)?",verso:"Chamado de CONSCIÊNCIA MORAL. Resposta automática 'certa' ou 'errada' diante de situações.",dica:"SUPER = superior = moral",memorização:"SUPEREGO = juiz interno que diz SIM ou NÃO"},
+    {frente:"O que é Liderança Transacional?",verso:"Apela a INTERESSES e NECESSIDADES PRIMÁRIAS. Baseada em TROCA (econômica ou psicológica).",dica:"TRANS-ação = transação comercial",memorização:"Você FAZ → Eu PAGO (troca, barganha)"},
+    {frente:"O que é Liderança Transformacional?",verso:"Inspira e motiva além dos interesses imediatos. Transforma pessoas e a organização.",dica:"TRANS-FORMA = transforma",memorização:"Vai além da troca: transforma o liderado"},
+    {frente:"O que é INICIATIVA (virtude)?",verso:"Ânimo pronto para CONCEBER e EXECUTAR. Manifestação de inteligência, imaginação, atividade e dedicação.",dica:"INICIA-tiva = começar",memorização:"INICIATIVA = apertar botão START sem ninguém mandar"}
+  ]
+};
+
+const exercicios = {
+  multiplaEscolha: [
+    {pergunta:"Qual dos seguintes NÃO é um fator da liderança?",alternativas:["Líder","Liderados","Recompensa","Situação","Comunicação"],correta:2,dica:"São 4 fatores: L, L, S e C",memorizacao:"LLSC - RECOMPENSA não está na sigla!"},
+    {pergunta:"Qual estilo de liderança se baseia em TROCAS e necessidades primárias?",alternativas:["Liderança Participativa","Liderança Transacional","Liderança Transformacional","Liderança Delegativa","Liderança Centralizadora"],correta:1,dica:"Pense em TRANSações comerciais",memorizacao:"TRANS-acional = TRANSação = TROCA"},
+    {pergunta:"Segundo Freud, qual elemento busca satisfazer emocionalmente os impulsos?",alternativas:["Id","Superego","Ego","Personalidade","Temperamento"],correta:2,dica:"É o elemento que faz REFLEXÃO e equilibra",memorizacao:"EGO = EU que pensa entre querer (ID) e dever (SUPEREGO)"},
+    {pergunta:"Qual nível de liderança tem contato FREQUENTE com subordinados?",alternativas:["Liderança Estratégica","Liderança Organizacional","Liderança Direta","Liderança Participativa","Liderança Indireta"],correta:2,dica:"Pense em 'ver diretamente'",memorizacao:"DIRETA = contato DIRETO, cara a cara, frequente"},
+    {pergunta:"Quantos são os eixos do estilo de liderança?",alternativas:["2 eixos","3 eixos","4 eixos","5 eixos","6 eixos"],correta:1,dica:"CIF - lembre da sigla de 3 letras",memorizacao:"3 eixos = CIF (Centralização, Incentivo, Foco)"},
+    {pergunta:"Qual atributo significa 'capacidade de se colocar no lugar do outro'?",alternativas:["Flexibilidade","Altruísmo","Iniciativa","Comunicação","Respeito"],correta:1,dica:"Começa com A e relaciona-se com 'outro' (alter)",memorizacao:"ALTRU-ísmo = ALTER (outro) = pensar no OUTRO"},
+    {pergunta:"Personalidade Compulsiva se caracteriza por:",alternativas:["Impulsividade excessiva","Perfeccionismo e verificações excessivas","Apatia e desinteresse","Agressividade extrema","Dependência emocional"],correta:1,dica:"COM-pulsivo = compulsão por...",memorizacao:"COM-pulsivo = compulsão de VERIFICAR tudo várias vezes"},
+    {pergunta:"Quantos temperamentos básicos identificou Hipócrates?",alternativas:["2 temperamentos","3 temperamentos","4 temperamentos","5 temperamentos","6 temperamentos"],correta:2,dica:"SMCF - quatro letras",memorizacao:"4 temperamentos = SMCF (Sanguíneo, Melancólico, Colérico, Fleumático)"},
+    {pergunta:"Qual síndrome caracteriza-se por exaustão emocional e estresse no trabalho?",alternativas:["Síndrome do Pânico","Síndrome de Burnout","Síndrome de Down","Síndrome de Estocolmo","Síndrome de Peter Pan"],correta:1,dica:"BURN = queimar",memorizacao:"BURN-out = QUEIMADO = 3 E's (Exaustão, Estresse, Energia zero)"},
+    {pergunta:"Na Janela de Johari, qual área é 'conhecida por mim e pelos outros'?",alternativas:["Área Cega","Área Secreta","Área Aberta","Área Desconhecida","Área Oculta"],correta:2,dica:"Se todos veem, está 'aberta'",memorizacao:"ABERTA = janela sem cortina = todos veem"},
+    {pergunta:"Qual método de modificação de atitude atua diretamente na pessoa?",alternativas:["Método Transacional","Método Indireto","Método Participativo","Método Direto","Método Situacional"],correta:3,dica:"O nome já diz!",memorizacao:"DIRETO = vai DIRETO na pessoa (sem intermediários)"},
+    {pergunta:"Qual via de influência usa razão e lógica?",alternativas:["Via Emocional","Via Intelectual","Via Transacional","Via Participativa","Via Afetiva"],correta:1,dica:"INTELECTO = mente, razão",memorizacao:"INTELECTUAL = convencer pela CABEÇA (razão)"},
+    {pergunta:"Liderança Orientada para Relacionamento é útil principalmente em:",alternativas:["Situações de alta produtividade","Momentos de tensão e desmotivação","Quando tudo está funcionando bem","Situações técnicas complexas","Momentos de urgência extrema"],correta:1,dica:"Quando time está MAL emocionalmente",memorizacao:"RELACIONAMENTO = quando precisa cuidar das PESSOAS"},
+    {pergunta:"O que é MOTIVO?",alternativas:["Recompensa externa","Condição interna que leva à ação","Tipo de liderança situacional","Atributo do líder","Método de influenciação"],correta:1,dica:"MOTIVO = MOTOR",memorizacao:"MOTIVO = MOTOR INTERNO que impulsiona"},
+    {pergunta:"Quais são os tipos de personalidade?",alternativas:["Forte e Fraca","Ativa e Passiva","Ajustada e Desajustada","Positiva e Negativa","Normal e Anormal"],correta:2,dica:"A-D",memorizacao:"A-D: AJUSTADA (adaptada) ou DESAJUSTADA"},
+    {pergunta:"Liderança Participativa permite que a equipe:",alternativas:["Não trabalhe sem ordens","Faça o que quiser","Continue funcionando na ausência do líder","Desobedeça hierarquia","Centralize as decisões"],correta:2,dica:"Equipe PREPARADA",memorizacao:"PARTICIPATIVA = equipe PARTICIPA tanto que pode continuar sozinha"},
+    {pergunta:"Qual pilar da Inteligência Emocional significa 'conhecer a si mesmo'?",alternativas:["Empatia","Autoconsciência","Relacionamento","Motivação","Controle"],correta:1,dica:"AUTO = si mesmo",memorizacao:"AUTO-consciência = consciência de SI MESMO"},
+    {pergunta:"Líderes Estratégicos exercem influência:",alternativas:["Direta e frequente","Muito indireta e distante","Apenas em situações de crise","Sem intermediários","Face a face com todos"],correta:1,dica:"Estão no TOPO",memorizacao:"ESTRATÉ-gicos = topo da pirâmide = MUITO longe e indiretos"},
+    {pergunta:"Incentivo IMATERIAL é:",alternativas:["Salário","Benefícios financeiros","Reconhecimento e elogios","Promoção de cargo","Bônus anual"],correta:2,dica:"Não é material (não pega na mão)",memorizacao:"I-MATERIAL = não tem matéria = reconhecimento, elogio"},
+    {pergunta:"Qual elemento de Freud representa os instintos primitivos?",alternativas:["Ego","Superego","Id","Personalidade","Caráter"],correta:2,dica:"O mais primitivo e inconsciente",memorizacao:"ID = instintos PRIMITIVOS (impulsos básicos)"}
+  ],
+  certoErrado: [
+    {afirmacao:"Os fatores da liderança são: Líder, Liderados, Recompensa e Situação",correta:false,justificativa:"Os 4 fatores são: Líder, Liderados, SITUAÇÃO e COMUNICAÇÃO (não Recompensa)",dica:"LLSC",memorizacao:"LLSC - falta o C de Comunicação!"},
+    {afirmacao:"Liderança Militar visa influenciar pessoas VOLUNTARIAMENTE",correta:true,justificativa:"Correto! A liderança militar busca ação VOLUNTÁRIA em prol da missão",dica:"Palavra-chave: VOLUNTÁRIA",memorizacao:"VOLUNTÁRIA é a essência da liderança (não forçada)"},
+    {afirmacao:"Existem apenas 2 eixos do estilo de liderança",correta:false,justificativa:"São 3 eixos: Centralização, Incentivo e Foco (CIF)",dica:"CIF = 3 letras = 3 eixos",memorizacao:"CIF = 3 eixos!"},
+    {afirmacao:"Temperamento são características ADQUIRIDAS ao longo da vida",correta:false,justificativa:"Temperamento são características INATAS (nascemos com elas), não adquiridas",dica:"INATAS = nascemos com",memorizacao:"TEMPER-amento = já vem de fábrica"},
+    {afirmacao:"O EGO busca equilibrar o Id e o Superego",correta:true,justificativa:"Correto! O EGO é a reflexão que equilibra impulsos (Id) e moral (Superego)",dica:"EGO = árbitro",memorizacao:"EGO = juiz que equilibra ID (quer) vs SUPEREGO (deve)"},
+    {afirmacao:"Síndrome de Burnout caracteriza-se por EXCESSO de energia",correta:false,justificativa:"Burnout caracteriza-se por FALTA de energia, exaustão e estresse",dica:"BURN = queimado",memorizacao:"BURN-out = QUEIMADO = energia ZERO (não excesso!)"},
+    {afirmacao:"Na Janela de Johari, a Área Cega é conhecida por mim mas não pelos outros",correta:false,justificativa:"Área CEGA: desconhecida por MIM, mas conhecida pelos OUTROS",dica:"CEGA = EU não vejo",memorizacao:"Área CEGA = EU estou CEGO (não vejo em mim)"},
+    {afirmacao:"Altruísmo é a capacidade de se colocar no lugar do outro",correta:true,justificativa:"Correto! Altruísmo = empatia, preocupar-se com o outro",dica:"ALTER = outro",memorizacao:"ALTRU = ALTER (outro) = pensar no outro"},
+    {afirmacao:"Existem 6 temperamentos básicos segundo Hipócrates",correta:false,justificativa:"São 4 temperamentos: Sanguíneo, Melancólico, Colérico, Fleumático (SMCF)",dica:"SMCF = 4 letras",memorizacao:"SMCF = 4 temperamentos básicos"},
+    {afirmacao:"Liderança Direta é aquela com contato frequente com subordinados",correta:true,justificativa:"Correto! Liderança DIRETA = primeira linha, ver subordinados frequentemente",dica:"DIRETA = ver direto",memorizacao:"DIRETA = cara a cara, FREQUENTE"},
+    {afirmacao:"Liderança Transacional baseia-se em transformar pessoas",correta:false,justificativa:"TRANS-ACIONAL baseia-se em TRANSAÇÃO (troca). Quem transforma é a TRANS-FORMACIONAL",dica:"Ação vs Formação",memorizacao:"TransAÇÃO = TROCA comercial (não transformação)"},
+    {afirmacao:"Personalidade é a combinação de hereditariedade e meio",correta:true,justificativa:"Correto! Personalidade = Hereditariedade × Meio (PHM)",dica:"P = H × M",memorizacao:"Personalidade = Herança VEZES Meio"},
+    {afirmacao:"Líderes Estratégicos estão na primeira linha de liderança",correta:false,justificativa:"LÍDERES DIRETOS estão na primeira linha. Estratégicos estão no TOPO",dica:"Estratégico = alto",memorizacao:"ESTRATÉ-gicos = TOPO da estratégia (não base)"},
+    {afirmacao:"Flexibilidade é a capacidade de adaptar-se a mudanças",correta:true,justificativa:"Correto! Flexibilidade = maleabilidade, adaptação",dica:"FLEX = dobra",memorizacao:"FLEX-ível = DOBRA sem quebrar"},
+    {afirmacao:"Método Direto de modificação atua através de influências externas",correta:false,justificativa:"Método DIRETO atua diretamente NA PESSOA. O INDIRETO usa influências externas",dica:"Direto = na pessoa",memorizacao:"DIRETO = vai DIRETO na pessoa (sem rodeios)"},
+    {afirmacao:"Via Emocional de influência usa razão e lógica",correta:false,justificativa:"Via INTELECTUAL usa razão. Via EMOCIONAL usa sentimentos e valores",dica:"Intelecto = razão",memorizacao:"INTELECTUAL = cabeça (razão) | EMOCIONAL = coração"},
+    {afirmacao:"Liderança Participativa permite que equipe continue na ausência do líder",correta:true,justificativa:"Correto! Equipe participativa é preparada para continuar sozinha",dica:"PARTICIPA = preparada",memorizacao:"PARTICIPA tanto que pode continuar sem líder"},
+    {afirmacao:"Superego representa os instintos primitivos",correta:false,justificativa:"ID representa instintos primitivos. SUPEREGO é a consciência moral",dica:"ID = instintos",memorizacao:"ID = instintos | SUPEREGO = moral (SUPER = superior)"},
+    {afirmacao:"Incentivo Semi-material inclui reconhecimento e elogios",correta:false,justificativa:"Reconhecimento e elogios são IMATERIAIS. Semi-materiais são promoções, condições de trabalho",dica:"I-material = intangível",memorizacao:"Elogio não pega na mão = I-MATERIAL"},
+    {afirmacao:"Inteligência Emocional tem 5 pilares",correta:true,justificativa:"Correto! 5 pilares: Autoconsciência, Controle, Automotivação, Empatia, Relacionamento (ACCER)",dica:"ACCER = 5 letras",memorizacao:"5 dedos = 5 pilares = ACCER"},
+    {afirmacao:"Liderança Orientada para Tarefa foca nas relações pessoais",correta:false,justificativa:"Orientada para TAREFA foca em FAZER/RESULTADO. Para RELACIONAMENTO foca em pessoas",dica:"Tarefa = fazer",memorizacao:"TAREFA = FAZER | RELACIONAMENTO = CUIDAR"},
+    {afirmacao:"Personalidade Compulsiva caracteriza-se por perfeccionismo excessivo",correta:true,justificativa:"Correto! Compulsiva = dúvida, perfeccionismo, verificações excessivas",dica:"COM-pulsão",memorizacao:"COM-pulsivo = compulsão de verificar TUDO"},
+    {afirmacao:"MOTIVO é uma recompensa externa",correta:false,justificativa:"MOTIVO é condição INTERNA. Recompensa externa seria INCENTIVO",dica:"MOTIVO = interno",memorizacao:"MOTIVO = MOTOR INTERNO (não externo)"},
+    {afirmacao:"Existem 3 tipos de incentivo: Material, Semi-material e Imaterial",correta:true,justificativa:"Correto! MSI - do concreto ao abstrato",dica:"MSI",memorizacao:"MSI = $ → cargo → elogio (concreto → abstrato)"},
+    {afirmacao:"Área Secreta da Janela de Johari é conhecida por todos",correta:false,justificativa:"Área SECRETA: conhecida por MIM, desconhecida pelos outros (eu escondo)",dica:"SECRETA = eu escondo",memorizacao:"SECRETA = EU SEI mas GUARDO segredo"}
+  ],
+  correlacione: [
+    {titulo:"Correlacione os Fatores da Liderança",coluna1:["Líder","Liderados","Situação","Comunicação"],coluna2:["Equipe do líder, suas necessidades e motivações","Processo de troca de ordens e informações","Pessoa que se destaca e influencia","Cada caso é único, não há fórmulas"],respostas:[2,0,3,1],dica:"LLSC",memorizacao:"Líder GUIA, Liderados SEGUEM, Situação VARIA, Comunicação CONECTA"},
+    {titulo:"Correlacione os Eixos com seus Estilos",coluna1:["Centralização","Incentivo","Foco"],coluna2:["Transformacional e Transacional","Tarefa e Relacionamento","Centralizadora, Participativa, Delegativa"],respostas:[2,0,1],dica:"CIF → CPD, TT, TR",memorizacao:"Poder→ CPD, Prêmio→ TT, Atenção→ TR"},
+    {titulo:"Correlacione Id, Ego e Superego",coluna1:["Id","Ego","Superego"],coluna2:["Consciência moral, certo vs errado","Instintos primitivos, impulsos","Reflexão, equilibra id e superego"],respostas:[1,2,0],dica:"IES",memorizacao:"ID quer, SUPEREGO julga, EGO decide"},
+    {titulo:"Correlacione os Níveis de Liderança",coluna1:["Liderança Direta","Liderança Organizacional","Liderança Estratégica"],coluna2:["Influência muito indireta, níveis mais elevados","Influência indireta via staff","Primeira linha, contato frequente"],respostas:[2,1,0],dica:"DOE",memorizacao:"DIRETA=perto, ORGANIZACIONAL=meio, ESTRATÉGICA=longe"},
+    {titulo:"Correlacione os Temperamentos",coluna1:["Sanguíneo","Melancólico","Colérico","Fleumático"],coluna2:["Irritado, explosivo","Alegre, otimista","Calmo, apático","Triste, pessimista"],respostas:[1,3,0,2],dica:"SMCF - humor dos temperamentos",memorizacao:"Sangue=alegre, Mel=triste, Cólera=raiva, Fleuma=calmo"}
+  ],
+  cite: [
+    {pergunta:"Cite os 4 fatores da liderança",resposta:"Líder, Liderados, Situação, Comunicação",dica:"LLSC",memorizacao:"LLSC - 4 pilares fundamentais"},
+    {pergunta:"Cite os 3 eixos do estilo de liderança",resposta:"Centralização de Poder, Tipo de Incentivo, Foco do Líder",dica:"CIF",memorizacao:"CIF - 3 botões de controle do líder"},
+    {pergunta:"Cite os 4 temperamentos de Hipócrates",resposta:"Sanguíneo, Melancólico, Colérico, Fleumático",dica:"SMCF",memorizacao:"4 líquidos corporais de Hipócrates"},
+    {pergunta:"Cite os 3 níveis de liderança",resposta:"Liderança Direta, Liderança Organizacional, Liderança Estratégica",dica:"DOE",memorizacao:"De baixo para cima na hierarquia"},
+    {pergunta:"Cite os 3 componentes da personalidade segundo Freud",resposta:"Id, Ego, Superego",dica:"IES",memorizacao:"Instinto, Equilíbrio, Social (moral)"},
+    {pergunta:"Cite os 3 estilos quanto à centralização",resposta:"Centralizadora, Participativa, Delegativa",dica:"CPD",memorizacao:"Centro, Participa, Delega"},
+    {pergunta:"Cite os 2 estilos quanto ao incentivo",resposta:"Transformacional, Transacional",dica:"TT",memorizacao:"Transforma ou Troca"},
+    {pergunta:"Cite as 4 áreas da Janela de Johari",resposta:"Área Aberta, Área Cega, Área Secreta, Área Desconhecida",dica:"ACSD",memorizacao:"4 vidros da janela de autoconhecimento"},
+    {pergunta:"Cite 3 características da Síndrome de Burnout",resposta:"Exaustão emocional, Estresse ligado ao trabalho, Falta de energia",dica:"EEE",memorizacao:"3 E's do esgotamento nervoso"},
+    {pergunta:"Cite os 5 pilares da Inteligência Emocional",resposta:"Autoconsciência, Controlar emoções, Automotivação, Empatia, Capacidade de se relacionar",dica:"ACCER",memorizacao:"5 dedos = 5 pilares"}
+  ],
+  liste: [
+    {pergunta:"Liste os principais atributos de um líder (mínimo 5)",resposta:"Altruísmo, Flexibilidade, Capacidade de Relacionamento Interpessoal, Iniciativa, Comunicação, Ética, Entusiasmo, Capacidade Decisória, Autoconfiança, Exemplo, Senso de Justiça",dica:"AFRICE+",memorizacao:"AFRICE - 6 essenciais, depois os demais"},
+    {pergunta:"Liste os 9 processos de influenciação",resposta:"Motivação, Afirmação, Sugestão, Exemplo, Exortação, Argumentação, Publicidade, Efeito da atmosfera, Prestígio",dica:"MASEAPEP",memorizacao:"9 formas de influenciar positivamente"},
+    {pergunta:"Liste as 2 vias para influenciar pessoas",resposta:"Via Intelectual, Via Emocional",dica:"Cabeça e Coração",memorizacao:"Convencer (mente) ou Emocionar (coração)"},
+    {pergunta:"Liste os 3 tipos de incentivo no trabalho",resposta:"Incentivos Materiais, Incentivos Semi-materiais, Incentivos Imateriais",dica:"MSI",memorizacao:"Do concreto ao abstrato: dinheiro → cargo → elogio"},
+    {pergunta:"Liste os 2 métodos de modificação de atitude",resposta:"Método Direto, Método Indireto",dica:"DI",memorizacao:"Na pessoa diretamente ou pelo ambiente"},
+    {pergunta:"Liste os 2 tipos de personalidade",resposta:"Personalidade Ajustada, Personalidade Desajustada",dica:"A-D",memorizacao:"Adaptada ao meio ou não adaptada"},
+    {pergunta:"Liste os 2 estilos quanto ao foco do líder",resposta:"Liderança Orientada para Tarefa, Liderança Orientada para Relacionamento",dica:"TR",memorizacao:"Fazer as coisas ou Cuidar das pessoas"},
+    {pergunta:"Liste os 4 modos de agir dos líderes",resposta:"Ditador, Tirano, Líder, Comandante",dica:"DTLC",memorizacao:"Do pior ao melhor modo de liderar"},
+    {pergunta:"Liste 4 características da Personalidade Compulsiva",resposta:"Sentimento de dúvida, Perfeccionismo, Verificações excessivas, Preocupação com detalhes",dica:"DPVD",memorizacao:"Compulsão por verificar e duvidar de tudo"},
+    {pergunta:"Liste as 3 características da Personalidade",resposta:"Temporal (muda com o tempo), Depende de traços inatos e hereditários, É síntese única (distingue cada pessoa)",dica:"THU",memorizacao:"Muda, Herda, Única"}
+  ],
+  vOuF: [
+    {conjunto:[{a:"Líder é um dos 4 fatores da liderança",v:true},{a:"Recompensa é um dos fatores da liderança",v:false},{a:"Comunicação é essencial na liderança",v:true},{a:"Situação não influencia o estilo de liderança",v:false},{a:"Liderados são a equipe do líder",v:true}],dica:"LLSC - 4 fatores",memorizacao:"Líder, Liderados, Situação, Comunicação = LLSC"},
+    {conjunto:[{a:"Existem 3 eixos do estilo de liderança",v:true},{a:"Centralização é um dos eixos",v:true},{a:"Punição é um dos eixos de liderança",v:false},{a:"Foco do líder é um dos eixos",v:true},{a:"Existem apenas 2 eixos de liderança",v:false}],dica:"CIF = 3 eixos",memorizacao:"Centralização, Incentivo, Foco = CIF"},
+    {conjunto:[{a:"Id representa instintos primitivos",v:true},{a:"Ego é a reflexão que equilibra",v:true},{a:"Superego é popularmente chamado de consciência",v:true},{a:"Id é a consciência moral",v:false},{a:"Superego representa os impulsos primitivos",v:false}],dica:"IES - Instinto, Equilíbrio, Social",memorizacao:"ID quer, EGO decide, SUPEREGO julga"},
+    {conjunto:[{a:"Temperamento são características INATAS",v:true},{a:"Hipócrates identificou 4 temperamentos",v:true},{a:"Sanguíneo é um temperamento básico",v:true},{a:"Temperamento é adquirido com experiência",v:false},{a:"Existem 6 temperamentos básicos",v:false}],dica:"SMCF - 4 temperamentos inatos",memorizacao:"Nasce com temperamento (INATO)"},
+    {conjunto:[{a:"Liderança Direta tem contato frequente",v:true},{a:"Liderança Estratégica está no topo",v:true},{a:"Liderança Organizacional usa influência direta",v:false},{a:"Existem 3 níveis de liderança",v:true},{a:"Liderança Direta é a mais indireta de todas",v:false}],dica:"DOE - Direto, Organizacional, Estratégico",memorizacao:"De perto para longe: Direta → Organizacional → Estratégica"}
+  ],
+  definicoes: [
+    {termo:"Liderança Militar",resposta:"Processo de influenciar pessoas para que ajam voluntariamente em prol do cumprimento da missão",dica:"Palavras-chave: VOLUNTARIAMENTE + MISSÃO",memorizacao:"Influência VOLUNTÁRIA para MISSÃO"},
+    {termo:"Personalidade",resposta:"Resultante psicofísica da interação da hereditariedade com o meio, manifestada através do comportamento",dica:"PHM - Psico + Herança + Meio",memorizacao:"P = H × M"},
+    {termo:"Temperamento",resposta:"Combinação de características inatas herdadas que afetam inconscientemente o comportamento",dica:"INATAS = nascemos com",memorizacao:"Já vem de fábrica (inato)"},
+    {termo:"Ego",resposta:"Reflexão, consciência da própria personalidade, busca satisfazer emocionalmente os impulsos",dica:"Equilíbrio entre Id e Superego",memorizacao:"EGO = árbitro entre id e superego"},
+    {termo:"Altruísmo",resposta:"Capacidade de se colocar no lugar dos liderados, preocupando-se com seu bem-estar",dica:"ALTER = outro",memorizacao:"Pensar no OUTRO primeiro"},
+    {termo:"Síndrome de Burnout",resposta:"Esgotamento nervoso caracterizado por exaustão emocional, estresse no trabalho e falta de energia",dica:"EEE - 3 E's",memorizacao:"QUEIMADO = 3 E's"},
+    {termo:"Janela de Johari",resposta:"Modelo de autoconhecimento com 4 áreas: Aberta, Cega, Secreta e Desconhecida",dica:"ACSD",memorizacao:"4 vidros da janela de autoconhecimento"},
+    {termo:"Liderança Transacional",resposta:"Apela aos interesses e necessidades primárias, baseada em relação de troca econômica ou psicológica",dica:"TROCA",memorizacao:"TRANSação comercial"},
+    {termo:"Motivo",resposta:"Condição interna que leva o indivíduo a agir e persistir visando um objetivo",dica:"INTERNO",memorizacao:"MOTOR interno"},
+    {termo:"Flexibilidade",resposta:"Maleabilidade de ideias e habilidade para adaptar-se a mudanças, agindo diferente em situações distintas",dica:"Adaptar",memorizacao:"DOBRA sem quebrar"}
+  ],
+  completeLacunas: [
+    {texto:"Os 4 fatores da liderança são: ___, ___, ___ e ___",respostas:["Líder","Liderados","Situação","Comunicação"],dica:"LLSC",memorizacao:"LLSC - Líderes Lideram Situações Comunicando"},
+    {texto:"Os 3 eixos do estilo de liderança são: ___, ___ e ___",respostas:["Centralização","Incentivo","Foco"],dica:"CIF",memorizacao:"CIF - 3 botões de controle da liderança"},
+    {texto:"Os 4 temperamentos de Hipócrates são: ___, ___, ___ e ___",respostas:["Sanguíneo","Melancólico","Colérico","Fleumático"],dica:"SMCF",memorizacao:"SMCF - 4 líquidos corporais"},
+    {texto:"Os 3 níveis de liderança são: ___, ___ e ___",respostas:["Direta","Organizacional","Estratégica"],dica:"DOE",memorizacao:"DOE - de baixo para cima na hierarquia"},
+    {texto:"Segundo Freud, a personalidade é dividida em: ___, ___ e ___",respostas:["Id","Ego","Superego"],dica:"IES",memorizacao:"IES - Instinto, Equilíbrio, Social"}
+  ]
+};
+
+const mapaMental = {
+  central:"LIDERANÇA",
+  ramos:[
+    {titulo:"FATORES",cor:"#FF6B6B",subramos:[
+      {nome:"LÍDER",detalhes:"Arte de se destacar e influenciar",exemplo:"Proeminência, obediência voluntária, respeito"},
+      {nome:"LIDERADOS",detalhes:"Equipe do líder",exemplo:"Conhecer necessidades, emoções, motivações"},
+      {nome:"SITUAÇÃO",detalhes:"Cada caso é único",exemplo:"Não há fórmulas, adaptar-se sempre"},
+      {nome:"COMUNICAÇÃO",detalhes:"Troca de informações",exemplo:"Coordenar, supervisionar, ensinar"}
+    ]},
+    {titulo:"EIXOS DE ESTILO",cor:"#4ECDC4",subramos:[
+      {nome:"CENTRALIZAÇÃO",detalhes:"Grau de poder do líder",exemplo:"Centralizadora, Participativa, Delegativa"},
+      {nome:"INCENTIVO",detalhes:"Tipo de motivação",exemplo:"Transformacional, Transacional"},
+      {nome:"FOCO",detalhes:"Onde está a atenção",exemplo:"Tarefa, Relacionamento"}
+    ]},
+    {titulo:"PERSONALIDADE",cor:"#95E1D3",subramos:[
+      {nome:"DEFINIÇÃO",detalhes:"Herança + Meio",exemplo:"Psicofísica, comportamento único"},
+      {nome:"TIPOS",detalhes:"Ajustada vs Desajustada",exemplo:"Compulsiva: perfeccionismo, dúvida"},
+      {nome:"TEMPERAMENTO",detalhes:"Características inatas (SMCF)",exemplo:"Sanguíneo, Melancólico, Colérico, Fleumático"},
+      {nome:"FREUD",detalhes:"Id, Ego, Superego",exemplo:"Instinto → Equilíbrio → Moral"}
+    ]},
+    {titulo:"NÍVEIS",cor:"#F38181",subramos:[
+      {nome:"DIRETA",detalhes:"Primeira linha",exemplo:"Contato frequente: pelotões, seções"},
+      {nome:"ORGANIZACIONAL",detalhes:"Influência indireta",exemplo:"Via staff, políticas e diretivas"},
+      {nome:"ESTRATÉGICA",detalhes:"Topo hierarquia",exemplo:"Muito indireta, instituição toda"}
+    ]},
+    {titulo:"ATRIBUTOS",cor:"#AA96DA",subramos:[
+      {nome:"ALTRUÍSMO",detalhes:"Empatia",exemplo:"Colocar-se no lugar do outro"},
+      {nome:"FLEXIBILIDADE",detalhes:"Adaptação",exemplo:"Maleabilidade de ideias"},
+      {nome:"INICIATIVA",detalhes:"Ação proativa",exemplo:"Ânimo para conceber e executar"},
+      {nome:"COMUNICAÇÃO",detalhes:"Clareza e eficiência",exemplo:"Transmitir ideias com precisão"},
+      {nome:"RELACIONAMENTO",detalhes:"Tato interpessoal",exemplo:"Respeito e consideração individual"}
+    ]},
+    {titulo:"CONCEITOS ESPECIAIS",cor:"#FCBAD3",subramos:[
+      {nome:"BURNOUT",detalhes:"Esgotamento nervoso (EEE)",exemplo:"Exaustão, estresse, falta de energia"},
+      {nome:"JOHARI",detalhes:"Autoconhecimento (ACSD)",exemplo:"Aberta, Cega, Secreta, Desconhecida"},
+      {nome:"INT. EMOCIONAL",detalhes:"5 pilares (ACCER)",exemplo:"Autoconsciência, Controle, Empatia..."},
+      {nome:"INFLUENCIAÇÃO",detalhes:"9 processos (MASEAPEP)",exemplo:"Motiva, Afirma, Sugere, Exemplifica..."}
+    ]}
+  ]
+};
+
+// ==================== COMPONENTE PRINCIPAL ====================
+function App() {
+  const [abaAtiva, setAbaAtiva] = useState('inicio');
+  const [ramoExpandido, setRamoExpandido] = useState(null);
+  const [subramoExpandido, setSubramoExpandido] = useState(null);
+  const [termoBusca, setTermoBusca] = useState('');
+
+  // Estado das questões padrão (CORRIGIDO - estava dentro de render antes)
+  const [qpAtual, setQpAtual] = useState(0);
+  const [qpSelecionada, setQpSelecionada] = useState(null);
+  const [qpRespondida, setQpRespondida] = useState(false);
+  const [qpMostrarDica, setQpMostrarDica] = useState(false);
+
+  // Estado Múltipla Escolha
+  const [me, setMe] = useState({ atual:0, respostas:[], respondidas:[], mostrarDica:false, finalizado:false, acertos:0 });
+  
+  // Estado Certo/Errado
+  const [ce, setCe] = useState({ atual:0, respostas:[], respondidas:[], mostrarDica:false, finalizado:false, acertos:0 });
+
+  // Estado Flashcards
+  const [fc, setFc] = useState({ atual:0, virado:false, naoSabia:[], sabia:[] });
+
+  // Estado Correlacione
+  const [corr, setCorr] = useState({ atual:0, respostas:{}, mostrarDica:false, confirmado:false });
+
+  // Estado Cite
+  const [cite, setCite] = useState({ atual:0, texto:'', mostrarDica:false, confirmado:false, refazer:[] });
+
+  // Estado Liste
+  const [liste, setListe] = useState({ atual:0, texto:'', mostrarDica:false, confirmado:false, refazer:[] });
+
+  // Estado V ou F
+  const [vf, setVf] = useState({ atual:0, respostas:{}, mostrarDica:false, confirmado:false });
+
+  // Estado Definições
+  const [def, setDef] = useState({ atual:0, texto:'', mostrarDica:false, confirmado:false, refazer:[] });
+
+  // Estado Complete as Lacunas
+  const [comp, setComp] = useState({ atual:0, texto:'', mostrarDica:false, confirmado:false, refazer:[] });
+
+  const navegar = (aba) => setAbaAtiva(aba);
+
+  // ==================== INÍCIO ====================
+  const renderInicio = () => (
+    <div className="container-inicio">
+      <div className="hero">
+        <div className="titulo-principal">🎖️ Liderança & Bases Psicológicas</div>
+        <div className="subtitulo">Escola de Formação Militar — Preparação Completa para a Prova</div>
+      </div>
+      <div className="cards-inicio">
+        {[
+          {aba:'superResumo',icon:'⚡',titulo:'Super Resumo',desc:'Pontos-chave rápidos'},
+          {aba:'resumo',icon:'📚',titulo:'Resumo Completo',desc:'Conteúdo por blocos + mnemônicos'},
+          {aba:'mapa',icon:'🗺️',titulo:'Mapa Mental',desc:'Visualização interativa'},
+          {aba:'flashcards',icon:'🎴',titulo:'Flashcards',desc:conteudoCompleto.flashcards.length+' cartões'},
+          {aba:'consulta',icon:'🔍',titulo:'Consulta',desc:'Busca no conteúdo'},
+          {aba:'questoes',icon:'📝',titulo:'Questões Padrão',desc:'40 questões da apostila'},
+          {aba:'multipla',icon:'✅',titulo:'Múltipla Escolha',desc:'20 questões + dicas'},
+          {aba:'certoErrado',icon:'✔️',titulo:'Certo ou Errado',desc:'25 afirmações'},
+          {aba:'correlacione',icon:'🔗',titulo:'Correlacione',desc:'5 conjuntos'},
+          {aba:'cite',icon:'📣',titulo:'Cite',desc:'10 questões'},
+          {aba:'liste',icon:'📋',titulo:'Liste',desc:'10 questões'},
+          {aba:'vof',icon:'🔵',titulo:'V ou F',desc:'5 conjuntos'},
+          {aba:'definicoes',icon:'📖',titulo:'Definições',desc:'10 termos'},
+          {aba:'lacunas',icon:'✏️',titulo:'Complete',desc:'5 exercícios'},
+        ].map(c=>(
+          <div key={c.aba} className="card-inicio" onClick={()=>navegar(c.aba)}>
+            <div className="card-icon">{c.icon}</div>
+            <h3>{c.titulo}</h3>
+            <p>{c.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div className="progresso-geral">
+        <h3>📊 Seu Progresso</h3>
+        <div className="stats">
+          <div className="stat"><span className="stat-label">Múltipla Escolha</span><span className="stat-valor">{me.acertos}/{exercicios.multiplaEscolha.length}</span></div>
+          <div className="stat"><span className="stat-label">Certo/Errado</span><span className="stat-valor">{ce.acertos}/{exercicios.certoErrado.length}</span></div>
+          <div className="stat"><span className="stat-label">Flashcards</span><span className="stat-valor">{fc.sabia.length}/{conteudoCompleto.flashcards.length}</span></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ==================== SUPER RESUMO ====================
+  const renderSuperResumo = () => (
+    <div className="container-conteudo">
+      <div className="titulo-secao">⚡ Super Resumo</div>
+      <div className="lista-resumo">
+        {conteudoCompleto.superResumo.map((item,i)=>(
+          <div key={i} className="item-resumo">
+            <span className="numero-item">{i+1}</span>
+            <p>{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // ==================== RESUMO COMPLETO ====================
+  const renderResumo = () => (
+    <div className="container-conteudo">
+      <div className="titulo-secao">📚 Resumo Completo</div>
+      <div className="blocos-resumo">
+        {Object.entries(conteudoCompleto.resumoCompleto).map(([titulo,dados],i)=>(
+          <div key={i} className="bloco-resumo">
+            <div className="titulo-bloco">{titulo}</div>
+            <p className="texto-bloco">{dados.conteudo}</p>
+            <div className="mnemonic-box">
+              <span className="label-mnemonic">💡 Mnemônico:</span>
+              <span className="texto-mnemonic">{dados.mnemonic}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // ==================== MAPA MENTAL ====================
+  const renderMapa = () => (
+    <div className="container-mapa">
+      <div className="titulo-secao">🗺️ Mapa Mental Interativo</div>
+      <div className="mapa-mental">
+        <div className="nodo-central">{mapaMental.central}</div>
+        <div className="ramos-container">
+          {mapaMental.ramos.map((ramo,i)=>(
+            <div key={i} className="ramo" style={{borderColor:ramo.cor}}>
+              <div className="titulo-ramo" style={{background:ramo.cor}} onClick={()=>setRamoExpandido(ramoExpandido===i?null:i)}>
+                {ramo.titulo} {ramoExpandido===i?'▼':'▶'}
+              </div>
+              {ramoExpandido===i&&(
+                <div className="subramos">
+                  {ramo.subramos.map((sub,j)=>(
+                    <div key={j} className="subramo">
+                      <div className="nome-subramo" onClick={()=>setSubramoExpandido(subramoExpandido===`${i}-${j}`?null:`${i}-${j}`)}>
+                        📌 {sub.nome} {subramoExpandido===`${i}-${j}`?'▼':'▶'}
+                      </div>
+                      {subramoExpandido===`${i}-${j}`&&(
+                        <div className="detalhes-subramo">
+                          <p><strong>Detalhes:</strong> {sub.detalhes}</p>
+                          <p><strong>Exemplo:</strong> {sub.exemplo}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  // ==================== FLASHCARDS ====================
+  const renderFlashcards = () => {
+    const card = conteudoCompleto.flashcards[fc.atual];
+    return (
+      <div className="container-flashcards">
+        <div className="titulo-secao">🎴 Flashcards</div>
+        <div className="contador-cards">Card {fc.atual+1} de {conteudoCompleto.flashcards.length}</div>
+        <div className="progresso-barra-container" style={{width:'100%',maxWidth:'580px'}}>
+          <div className="progresso-barra" style={{width:`${((fc.atual+1)/conteudoCompleto.flashcards.length)*100}%`}}></div>
+        </div>
+        <div className={`flashcard${fc.virado?' virado':''}`} onClick={()=>setFc({...fc,virado:!fc.virado})}>
+          <div className="face-frente">
+            <h3>❓ Pergunta:</h3>
+            <p>{card.frente}</p>
+            <div className="dica-card">💡 {card.dica}</div>
+            <div className="flip-hint">Clique para ver a resposta</div>
+          </div>
+          <div className="face-verso">
+            <h3>✅ Resposta:</h3>
+            <p>{card.verso}</p>
+            <div className="memo-card"><strong>🧠 Memorização:</strong> {card.memoriz00e3o||card.memoriz||card.memorizacao||card.memo||card.memoriz||card.memorizacao||card.memo||'—'}</div>
+          </div>
+        </div>
+        <div className="botoes-flashcard">
+          <button className="btn-secundario" onClick={()=>fc.atual>0&&setFc({...fc,atual:fc.atual-1,virado:false})} disabled={fc.atual===0}>← Anterior</button>
+          <button className="btn-nao-sabia" onClick={()=>{
+            setFc({...fc,naoSabia:[...fc.naoSabia,fc.atual],atual:fc.atual<conteudoCompleto.flashcards.length-1?fc.atual+1:fc.atual,virado:false});
+          }}>❌ Não Sabia</button>
+          <button className="btn-sabia" onClick={()=>{
+            setFc({...fc,sabia:[...fc.sabia,fc.atual],atual:fc.atual<conteudoCompleto.flashcards.length-1?fc.atual+1:fc.atual,virado:false});
+          }}>✅ Sabia</button>
+          <button className="btn-primario" onClick={()=>fc.atual<conteudoCompleto.flashcards.length-1&&setFc({...fc,atual:fc.atual+1,virado:false})} disabled={fc.atual===conteudoCompleto.flashcards.length-1}>Próximo →</button>
+        </div>
+        {fc.naoSabia.length>0&&(
+          <button className="btn-revisar" onClick={()=>setFc({...fc,atual:fc.naoSabia[0],naoSabia:fc.naoSabia.slice(1),virado:false})}>
+            🔄 Revisar "Não Sabia" ({fc.naoSabia.length} restantes)
+          </button>
+        )}
+        <p style={{color:'#999',marginTop:'1rem',fontSize:'.85rem'}}>Sabia: {fc.sabia.length} | Não sabia: {fc.naoSabia.length}</p>
+      </div>
+    );
+  };
+
+  // ==================== CONSULTA ====================
+  const renderConsulta = () => {
+    const resultados = [];
+    if(termoBusca.length>=3){
+      Object.entries(conteudoCompleto.resumoCompleto).forEach(([titulo,dados])=>{
+        if(titulo.toLowerCase().includes(termoBusca.toLowerCase())||dados.conteudo.toLowerCase().includes(termoBusca.toLowerCase())){
+          resultados.push({tipo:'resumo',titulo,conteudo:dados.conteudo,mnemonic:dados.mnemonic});
+        }
+      });
+      conteudoCompleto.questoesPadrao.forEach((q,i)=>{
+        if(q.pergunta.toLowerCase().includes(termoBusca.toLowerCase())||q.explicacao.toLowerCase().includes(termoBusca.toLowerCase())){
+          resultados.push({tipo:'questao',numero:i+1,...q});
+        }
+      });
+    }
+    return (
+      <div className="container-consulta">
+        <div className="titulo-secao">🔍 Consulta do Conteúdo</div>
+        <input type="text" className="input-busca" placeholder="Digite para buscar (mín. 3 caracteres)..." value={termoBusca} onChange={e=>setTermoBusca(e.target.value)}/>
+        <div className="resultados-busca">
+          {termoBusca.length<3&&<p className="info-busca">Digite pelo menos 3 caracteres para buscar</p>}
+          {termoBusca.length>=3&&resultados.length===0&&<p className="info-busca">Nenhum resultado encontrado para "{termoBusca}"</p>}
+          {resultados.map((r,i)=>(
+            <div key={i} className="resultado-item">
+              {r.tipo==='resumo'&&<><h3>📚 {r.titulo}</h3><p>{r.conteudo}</p><p style={{color:'#764ba2',fontWeight:'bold'}}>💡 {r.mnemonic}</p></>}
+              {r.tipo==='questao'&&<><h3>📝 Questão {r.numero}</h3><p><strong>Pergunta:</strong> {r.pergunta}</p><p><strong>Resposta:</strong> {r.alternativas[r.correta]}</p><p><strong>Explicação:</strong> {r.explicacao}</p></>}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== QUESTÕES PADRÃO (CORRIGIDO) ====================
+  const renderQuestoesPadrao = () => {
+    const q = conteudoCompleto.questoesPadrao[qpAtual];
+    const goTo = (n) => { setQpAtual(n); setQpSelecionada(null); setQpRespondida(false); setQpMostrarDica(false); };
+    return (
+      <div className="container-questoes">
+        <div className="titulo-secao">📝 Questões Padrão do Material</div>
+        <div className="contador-questoes">Questão {qpAtual+1} de {conteudoCompleto.questoesPadrao.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((qpAtual+1)/conteudoCompleto.questoesPadrao.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{q.pergunta}</p>
+          <div className="alternativas">
+            {q.alternativas.map((alt,i)=>(
+              <div key={i} className={`alternativa${qpSelecionada===i?' selecionada':''}${qpRespondida&&i===q.correta?' correta':''}${qpRespondida&&qpSelecionada===i&&i!==q.correta?' incorreta':''}`}
+                onClick={()=>!qpRespondida&&setQpSelecionada(i)}>
+                <span className="letra-alternativa">{String.fromCharCode(65+i)})</span>
+                <span className="texto-alternativa">{alt}</span>
+              </div>
+            ))}
+          </div>
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setQpMostrarDica(!qpMostrarDica)}>💡 {qpMostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setQpRespondida(true)} disabled={qpSelecionada===null||qpRespondida}>✓ Confirmar</button>
+          </div>
+          {qpMostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {qpRespondida&&(
+            <div className={`explicacao-box ${qpSelecionada===q.correta?'acerto':'erro'}`}>
+              <h4>{qpSelecionada===q.correta?'✅ Correto!':'❌ Incorreto'}</h4>
+              {qpSelecionada!==q.correta&&<p><strong>Resposta correta:</strong> {q.alternativas[q.correta]}</p>}
+              <p><strong>Explicação:</strong> {q.explicacao}</p>
+              <div className="memo-box">🧠 <strong>Mnemônico:</strong> {q.dica}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>goTo(qpAtual-1)} disabled={qpAtual===0}>← Anterior</button>
+          <button className="btn-primario" onClick={()=>goTo(qpAtual+1)} disabled={qpAtual===conteudoCompleto.questoesPadrao.length-1}>Próxima →</button>
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== MÚLTIPLA ESCOLHA ====================
+  const renderMultipla = () => {
+    if(me.finalizado){
+      const erradas = exercicios.multiplaEscolha.map((q,i)=>({...q,i,resp:me.respostas[i]})).filter(q=>q.resp!==q.correta);
+      return (
+        <div className="container-exercicio">
+          <div className="titulo-secao">✅ Múltipla Escolha — Resultado</div>
+          <div className="resultado-final">
+            <h2>{me.acertos}/{exercicios.multiplaEscolha.length}</h2>
+            <p>{me.acertos===exercicios.multiplaEscolha.length?'🏆 Perfeito!':me.acertos>=14?'🎯 Muito bom!':me.acertos>=10?'📚 Continue estudando!':'💪 Revise o conteúdo!'}</p>
+          </div>
+          {erradas.length>0&&(
+            <div className="questoes-erradas" style={{marginTop:'1.5rem'}}>
+              <h3 style={{marginBottom:'1rem',color:'#333'}}>❌ Questões para revisar:</h3>
+              {erradas.map((q,i)=>(
+                <div key={i} className="questao-errada-item">
+                  <p><strong>Questão:</strong> {q.pergunta}</p>
+                  <p>❌ Sua resposta: {q.alternativas[q.resp]??'Não respondida'}</p>
+                  <p>✅ Correta: {q.alternativas[q.correta]}</p>
+                  <p>🧠 {q.memorizacao}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="navegacao-questoes" style={{marginTop:'1.5rem'}}>
+            <button className="btn-primario" onClick={()=>setMe({atual:0,respostas:[],respondidas:[],mostrarDica:false,finalizado:false,acertos:0})}>🔄 Refazer</button>
+            {erradas.length>0&&<button className="btn-secundario" onClick={()=>{
+              const idx=erradas.map(q=>q.i);
+              setMe({atual:idx[0],respostas:[],respondidas:[],mostrarDica:false,finalizado:false,acertos:0,filtro:idx});
+            }}>📚 Refazer Erradas</button>}
+          </div>
+        </div>
+      );
+    }
+    const lista = me.filtro?exercicios.multiplaEscolha.filter((_,i)=>me.filtro.includes(i)):exercicios.multiplaEscolha;
+    const q = lista[me.atual];
+    const respondida = me.respondidas[me.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">✅ Múltipla Escolha</div>
+        <div className="contador-questoes">Questão {me.atual+1} de {lista.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((me.atual+1)/lista.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{q.pergunta}</p>
+          <div className="alternativas">
+            {q.alternativas.map((alt,i)=>(
+              <div key={i} className={`alternativa${me.respostas[me.atual]===i?' selecionada':''}${respondida&&i===q.correta?' correta':''}${respondida&&me.respostas[me.atual]===i&&i!==q.correta?' incorreta':''}`}
+                onClick={()=>{if(!respondida){const r=[...me.respostas];r[me.atual]=i;setMe({...me,respostas:r});}}}>
+                <span className="letra-alternativa">{String.fromCharCode(65+i)})</span>
+                <span className="texto-alternativa">{alt}</span>
+              </div>
+            ))}
+          </div>
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setMe({...me,mostrarDica:!me.mostrarDica})}>💡 {me.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>{
+              const nr=[...me.respondidas];nr[me.atual]=true;
+              const acertou=me.respostas[me.atual]===q.correta;
+              setMe({...me,respondidas:nr,acertos:me.acertos+(acertou?1:0)});
+            }} disabled={me.respostas[me.atual]===undefined||respondida}>✓ Confirmar</button>
+          </div>
+          {me.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {respondida&&(
+            <div className={`explicacao-box ${me.respostas[me.atual]===q.correta?'acerto':'erro'}`}>
+              <h4>{me.respostas[me.atual]===q.correta?'✅ Correto!':'❌ Incorreto'}</h4>
+              {me.respostas[me.atual]!==q.correta&&<p><strong>Correta:</strong> {q.alternativas[q.correta]}</p>}
+              <div className="memo-box">🧠 <strong>Memorização:</strong> {q.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setMe({...me,atual:me.atual-1,mostrarDica:false})} disabled={me.atual===0}>← Anterior</button>
+          {me.atual<lista.length-1?
+            <button className="btn-primario" onClick={()=>setMe({...me,atual:me.atual+1,mostrarDica:false})}>Próxima →</button>:
+            <button className="btn-primario" onClick={()=>setMe({...me,finalizado:true})}>Ver Resultado 🏆</button>
+          }
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== CERTO OU ERRADO ====================
+  const renderCertoErrado = () => {
+    if(ce.finalizado){
+      const erradas = exercicios.certoErrado.map((q,i)=>({...q,i,resp:ce.respostas[i]})).filter(q=>q.resp!==q.correta);
+      return (
+        <div className="container-exercicio">
+          <div className="titulo-secao">✔️ Certo ou Errado — Resultado</div>
+          <div className="resultado-final">
+            <h2>{ce.acertos}/{exercicios.certoErrado.length}</h2>
+            <p>{ce.acertos===exercicios.certoErrado.length?'🏆 Perfeito!':ce.acertos>=18?'🎯 Muito bom!':'📚 Revise!'}</p>
+          </div>
+          {erradas.length>0&&(
+            <div className="questoes-erradas" style={{marginTop:'1.5rem'}}>
+              <h3 style={{marginBottom:'1rem',color:'#333'}}>❌ Para revisar:</h3>
+              {erradas.map((q,i)=>(
+                <div key={i} className="questao-errada-item">
+                  <p><strong>"{q.afirmacao}"</strong></p>
+                  <p>❌ Você disse: {q.resp===undefined?'Não respondida':q.resp?'CERTO':'ERRADO'} | ✅ Correto: {q.correta?'CERTO':'ERRADO'}</p>
+                  <p>📝 {q.justificativa}</p>
+                  <p>🧠 {q.memorizacao}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="navegacao-questoes" style={{marginTop:'1.5rem'}}>
+            <button className="btn-primario" onClick={()=>setCe({atual:0,respostas:[],respondidas:[],mostrarDica:false,finalizado:false,acertos:0})}>🔄 Refazer</button>
+          </div>
+        </div>
+      );
+    }
+    const item = exercicios.certoErrado[ce.atual];
+    const respondida = ce.respondidas[ce.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">✔️ Certo ou Errado</div>
+        <div className="contador-questoes">Questão {ce.atual+1} de {exercicios.certoErrado.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((ce.atual+1)/exercicios.certoErrado.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="afirmacao">"{item.afirmacao}"</p>
+          <div className="botoes-ce">
+            <button className={`btn-ce${ce.respostas[ce.atual]===true?' selecionado':''}${respondida&&item.correta===true?' correto':''}${respondida&&ce.respostas[ce.atual]===true&&!item.correta?' incorreto':''}`}
+              onClick={()=>{if(!respondida){const r=[...ce.respostas];r[ce.atual]=true;setCe({...ce,respostas:r});}}}>✓ CERTO</button>
+            <button className={`btn-ce${ce.respostas[ce.atual]===false?' selecionado':''}${respondida&&item.correta===false?' correto':''}${respondida&&ce.respostas[ce.atual]===false&&item.correta?' incorreto':''}`}
+              onClick={()=>{if(!respondida){const r=[...ce.respostas];r[ce.atual]=false;setCe({...ce,respostas:r});}}}>✗ ERRADO</button>
+          </div>
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setCe({...ce,mostrarDica:!ce.mostrarDica})}>💡 {ce.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>{
+              const nr=[...ce.respondidas];nr[ce.atual]=true;
+              const acertou=ce.respostas[ce.atual]===item.correta;
+              setCe({...ce,respondidas:nr,acertos:ce.acertos+(acertou?1:0)});
+            }} disabled={ce.respostas[ce.atual]===undefined||respondida}>✓ Confirmar</button>
+          </div>
+          {ce.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {item.dica}</div>}
+          {respondida&&(
+            <div className={`explicacao-box ${ce.respostas[ce.atual]===item.correta?'acerto':'erro'}`}>
+              <h4>{ce.respostas[ce.atual]===item.correta?'✅ Correto!':'❌ Incorreto'}</h4>
+              <p><strong>Justificativa:</strong> {item.justificativa}</p>
+              <div className="memo-box">🧠 <strong>Memorização:</strong> {item.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setCe({...ce,atual:ce.atual-1,mostrarDica:false})} disabled={ce.atual===0}>← Anterior</button>
+          {ce.atual<exercicios.certoErrado.length-1?
+            <button className="btn-primario" onClick={()=>setCe({...ce,atual:ce.atual+1,mostrarDica:false})}>Próxima →</button>:
+            <button className="btn-primario" onClick={()=>setCe({...ce,finalizado:true})}>Ver Resultado 🏆</button>
+          }
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== CORRELACIONE ====================
+  const renderCorrelacione = () => {
+    const conj = exercicios.correlacione[corr.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">🔗 Correlacione</div>
+        <div className="tag-exercicio">Conjunto {corr.atual+1} de {exercicios.correlacione.length}</div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{conj.titulo}</p>
+          <div className="correlacao-container">
+            <div>
+              <h4>Coluna A</h4>
+              {conj.coluna1.map((item,i)=>(
+                <div key={i} className={`correlacao-item${corr.confirmado&&corr.respostas[i]===conj.respostas[i]?' correto':corr.confirmado?' incorreto':''}`}>
+                  <span className="num-correlacao">{i+1}</span>
+                  <span style={{flex:1}}>{item}</span>
+                  {!corr.confirmado?
+                    <input className="input-numero" type="number" min="1" max={conj.coluna2.length} 
+                      value={corr.respostas[i]!==undefined?corr.respostas[i]+1:''} 
+                      onChange={e=>{const r={...corr.respostas};r[i]=parseInt(e.target.value)-1;setCorr({...corr,respostas:r});}}
+                      placeholder="?"/>:
+                    <span className={`badge-resposta ${corr.respostas[i]===conj.respostas[i]?'badge-correto':'badge-incorreto'}`}>
+                      {corr.respostas[i]!==undefined?corr.respostas[i]+1:'?'} {corr.respostas[i]===conj.respostas[i]?'✅':'❌ ('+( conj.respostas[i]+1)+')'}
+                    </span>
+                  }
+                </div>
+              ))}
+            </div>
+            <div>
+              <h4>Coluna B</h4>
+              {conj.coluna2.map((item,i)=>(
+                <div key={i} className="correlacao-item" style={{cursor:'default'}}>
+                  <span className="num-correlacao">{i+1}</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setCorr({...corr,mostrarDica:!corr.mostrarDica})}>💡 {corr.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setCorr({...corr,confirmado:true})} disabled={corr.confirmado}>✓ Confirmar</button>
+          </div>
+          {corr.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {conj.dica}</div>}
+          {corr.confirmado&&<div className="explicacao-box acerto" style={{marginTop:'1rem'}}><div className="memo-box">🧠 <strong>Memorização:</strong> {conj.memorizacao}</div></div>}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setCorr({atual:corr.atual-1,respostas:{},mostrarDica:false,confirmado:false})} disabled={corr.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setCorr({...corr,respostas:{},confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {corr.atual<exercicios.correlacione.length-1&&<button className="btn-primario" onClick={()=>setCorr({atual:corr.atual+1,respostas:{},mostrarDica:false,confirmado:false})}>Próximo →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== CITE ====================
+  const renderCite = () => {
+    const q = exercicios.cite[cite.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">📣 Cite</div>
+        <div className="contador-questoes">Questão {cite.atual+1} de {exercicios.cite.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((cite.atual+1)/exercicios.cite.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{q.pergunta}</p>
+          <textarea className="textarea-resposta" placeholder="Digite sua resposta aqui..." value={cite.texto} onChange={e=>setCite({...cite,texto:e.target.value})} disabled={cite.confirmado}/>
+          {cite.confirmado&&<div className="resposta-usuario"><strong>Sua resposta:</strong> {cite.texto||'(sem resposta)'}</div>}
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setCite({...cite,mostrarDica:!cite.mostrarDica})}>💡 {cite.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setCite({...cite,confirmado:true})} disabled={cite.confirmado}>✓ Confirmar</button>
+          </div>
+          {cite.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {cite.confirmado&&(
+            <div className="explicacao-box acerto">
+              <div className="gabarito-box"><strong>✅ Gabarito:</strong> {q.resposta}</div>
+              <div className="memo-box" style={{marginTop:'1rem'}}>🧠 <strong>Memorização:</strong> {q.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setCite({atual:cite.atual-1,texto:'',mostrarDica:false,confirmado:false})} disabled={cite.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setCite({...cite,texto:'',confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {cite.atual<exercicios.cite.length-1&&<button className="btn-primario" onClick={()=>setCite({atual:cite.atual+1,texto:'',mostrarDica:false,confirmado:false})}>Próxima →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== LISTE ====================
+  const renderListe = () => {
+    const q = exercicios.liste[liste.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">📋 Liste</div>
+        <div className="contador-questoes">Questão {liste.atual+1} de {exercicios.liste.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((liste.atual+1)/exercicios.liste.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{q.pergunta}</p>
+          <textarea className="textarea-resposta" placeholder="Liste os itens (um por linha ou separados por vírgula)..." value={liste.texto} onChange={e=>setListe({...liste,texto:e.target.value})} disabled={liste.confirmado}/>
+          {liste.confirmado&&<div className="resposta-usuario"><strong>Sua resposta:</strong> {liste.texto||'(sem resposta)'}</div>}
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setListe({...liste,mostrarDica:!liste.mostrarDica})}>💡 {liste.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setListe({...liste,confirmado:true})} disabled={liste.confirmado}>✓ Confirmar</button>
+          </div>
+          {liste.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {liste.confirmado&&(
+            <div className="explicacao-box acerto">
+              <div className="gabarito-box"><strong>✅ Gabarito:</strong> {q.resposta}</div>
+              <div className="memo-box" style={{marginTop:'1rem'}}>🧠 <strong>Memorização:</strong> {q.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setListe({atual:liste.atual-1,texto:'',mostrarDica:false,confirmado:false})} disabled={liste.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setListe({...liste,texto:'',confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {liste.atual<exercicios.liste.length-1&&<button className="btn-primario" onClick={()=>setListe({atual:liste.atual+1,texto:'',mostrarDica:false,confirmado:false})}>Próxima →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== V OU F ====================
+  const renderVouF = () => {
+    const conj = exercicios.vOuF[vf.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">🔵 Verdadeiro ou Falso</div>
+        <div className="tag-exercicio">Conjunto {vf.atual+1} de {exercicios.vOuF.length}</div>
+        <div className="questao-box">
+          {conj.conjunto.map((item,i)=>(
+            <div key={i} style={{marginBottom:'1.2rem',padding:'1rem',background:'#fff',borderRadius:'10px',border:`2px solid ${vf.confirmado?(vf.respostas[i]===item.v?'#51cf66':'#ff6b6b'):'#ddd'}`}}>
+              <p style={{marginBottom:'.8rem',fontWeight:'bold',fontSize:'1rem'}}>"{item.a}"</p>
+              <div style={{display:'flex',gap:'1rem',flexWrap:'wrap'}}>
+                <button className={`btn-ce${vf.respostas[i]===true?' selecionado':''}${vf.confirmado&&item.v===true?' correto':''}${vf.confirmado&&vf.respostas[i]===true&&!item.v?' incorreto':''}`}
+                  style={{fontSize:'.9rem',padding:'.6rem 1.2rem'}}
+                  onClick={()=>{if(!vf.confirmado){const r={...vf.respostas};r[i]=true;setVf({...vf,respostas:r});}}}>
+                  ✓ VERDADEIRO
+                </button>
+                <button className={`btn-ce${vf.respostas[i]===false?' selecionado':''}${vf.confirmado&&item.v===false?' correto':''}${vf.confirmado&&vf.respostas[i]===false&&item.v?' incorreto':''}`}
+                  style={{fontSize:'.9rem',padding:'.6rem 1.2rem'}}
+                  onClick={()=>{if(!vf.confirmado){const r={...vf.respostas};r[i]=false;setVf({...vf,respostas:r});}}}>
+                  ✗ FALSO
+                </button>
+                {vf.confirmado&&<span className={`badge-resposta ${vf.respostas[i]===item.v?'badge-correto':'badge-incorreto'}`}>{vf.respostas[i]===item.v?'✅ Correto':'❌ Incorreto ('+( item.v?'V':'F')+')'}</span>}
+              </div>
+            </div>
+          ))}
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setVf({...vf,mostrarDica:!vf.mostrarDica})}>💡 {vf.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setVf({...vf,confirmado:true})} disabled={vf.confirmado||Object.keys(vf.respostas).length<conj.conjunto.length}>✓ Confirmar</button>
+          </div>
+          {vf.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {conj.dica}</div>}
+          {vf.confirmado&&<div className="explicacao-box acerto" style={{marginTop:'1rem'}}><div className="memo-box">🧠 <strong>Memorização:</strong> {conj.memorizacao}</div></div>}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setVf({atual:vf.atual-1,respostas:{},mostrarDica:false,confirmado:false})} disabled={vf.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setVf({...vf,respostas:{},confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {vf.atual<exercicios.vOuF.length-1&&<button className="btn-primario" onClick={()=>setVf({atual:vf.atual+1,respostas:{},mostrarDica:false,confirmado:false})}>Próximo →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== DEFINIÇÕES ====================
+  const renderDefinicoes = () => {
+    const q = exercicios.definicoes[def.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">📖 Definições</div>
+        <div className="contador-questoes">Questão {def.atual+1} de {exercicios.definicoes.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((def.atual+1)/exercicios.definicoes.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p style={{fontSize:'1.1rem',color:'#667eea',fontWeight:'bold',marginBottom:'.5rem'}}>Defina o termo:</p>
+          <p className="pergunta-questao" style={{fontSize:'1.8rem',textAlign:'center',padding:'1rem',background:'linear-gradient(135deg,#667eea,#764ba2)',color:'#fff',borderRadius:'10px',marginBottom:'1.5rem'}}>{q.termo}</p>
+          <textarea className="textarea-resposta" placeholder="Escreva sua definição aqui..." value={def.texto} onChange={e=>setDef({...def,texto:e.target.value})} disabled={def.confirmado}/>
+          {def.confirmado&&<div className="resposta-usuario"><strong>Sua resposta:</strong> {def.texto||'(sem resposta)'}</div>}
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setDef({...def,mostrarDica:!def.mostrarDica})}>💡 {def.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setDef({...def,confirmado:true})} disabled={def.confirmado}>✓ Confirmar</button>
+          </div>
+          {def.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {def.confirmado&&(
+            <div className="explicacao-box acerto">
+              <div className="gabarito-box"><strong>✅ Definição correta:</strong> {q.resposta}</div>
+              <div className="memo-box" style={{marginTop:'1rem'}}>🧠 <strong>Memorização:</strong> {q.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setDef({atual:def.atual-1,texto:'',mostrarDica:false,confirmado:false})} disabled={def.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setDef({...def,texto:'',confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {def.atual<exercicios.definicoes.length-1&&<button className="btn-primario" onClick={()=>setDef({atual:def.atual+1,texto:'',mostrarDica:false,confirmado:false})}>Próxima →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== COMPLETE AS LACUNAS ====================
+  const renderLacunas = () => {
+    const q = exercicios.completeLacunas[comp.atual];
+    return (
+      <div className="container-exercicio">
+        <div className="titulo-secao">✏️ Complete as Lacunas</div>
+        <div className="contador-questoes">Questão {comp.atual+1} de {exercicios.completeLacunas.length}</div>
+        <div className="progresso-barra-container"><div className="progresso-barra" style={{width:`${((comp.atual+1)/exercicios.completeLacunas.length)*100}%`}}></div></div>
+        <div className="questao-box">
+          <p className="pergunta-questao">{q.texto}</p>
+          <textarea className="textarea-resposta" placeholder={`Complete com as ${q.respostas.length} palavras/termos corretos...`} value={comp.texto} onChange={e=>setComp({...comp,texto:e.target.value})} disabled={comp.confirmado}/>
+          {comp.confirmado&&<div className="resposta-usuario"><strong>Sua resposta:</strong> {comp.texto||'(sem resposta)'}</div>}
+          <div className="botoes-questao">
+            <button className="btn-secundario" onClick={()=>setComp({...comp,mostrarDica:!comp.mostrarDica})}>💡 {comp.mostrarDica?'Ocultar':'Ver'} Dica</button>
+            <button className="btn-primario" onClick={()=>setComp({...comp,confirmado:true})} disabled={comp.confirmado}>✓ Confirmar</button>
+          </div>
+          {comp.mostrarDica&&<div className="dica-box">💡 <strong>Dica:</strong> {q.dica}</div>}
+          {comp.confirmado&&(
+            <div className="explicacao-box acerto">
+              <div className="gabarito-box"><strong>✅ Respostas:</strong> {q.respostas.join(', ')}</div>
+              <div className="memo-box" style={{marginTop:'1rem'}}>🧠 <strong>Memorização:</strong> {q.memorizacao}</div>
+            </div>
+          )}
+        </div>
+        <div className="navegacao-questoes">
+          <button className="btn-secundario" onClick={()=>setComp({atual:comp.atual-1,texto:'',mostrarDica:false,confirmado:false})} disabled={comp.atual===0}>← Anterior</button>
+          <button className="btn-perigo" onClick={()=>setComp({...comp,texto:'',confirmado:false,mostrarDica:false})}>🔄 Refazer</button>
+          {comp.atual<exercicios.completeLacunas.length-1&&<button className="btn-primario" onClick={()=>setComp({atual:comp.atual+1,texto:'',mostrarDica:false,confirmado:false})}>Próxima →</button>}
+        </div>
+      </div>
+    );
+  };
+
+  // ==================== NAVEGAÇÃO E RENDER PRINCIPAL ====================
+  const tabs = [
+    {id:'inicio',label:'🏠 Início'},{id:'superResumo',label:'⚡ Resumo'},{id:'resumo',label:'📚 Completo'},
+    {id:'mapa',label:'🗺️ Mapa'},{id:'flashcards',label:'🎴 Flashcards'},{id:'consulta',label:'🔍 Consulta'},
+    {id:'questoes',label:'📝 Questões'},{id:'multipla',label:'✅ Múltipla'},{id:'certoErrado',label:'✔️ C/E'},
+    {id:'correlacione',label:'🔗 Correl.'},{id:'cite',label:'📣 Cite'},{id:'liste',label:'📋 Liste'},
+    {id:'vof',label:'🔵 V/F'},{id:'definicoes',label:'📖 Def.'},{id:'lacunas',label:'✏️ Lacunas'}
+  ];
+
+  const renderAtivo = () => {
+    switch(abaAtiva){
+      case 'superResumo': return renderSuperResumo();
+      case 'resumo': return renderResumo();
+      case 'mapa': return renderMapa();
+      case 'flashcards': return renderFlashcards();
+      case 'consulta': return renderConsulta();
+      case 'questoes': return renderQuestoesPadrao();
+      case 'multipla': return renderMultipla();
+      case 'certoErrado': return renderCertoErrado();
+      case 'correlacione': return renderCorrelacione();
+      case 'cite': return renderCite();
+      case 'liste': return renderListe();
+      case 'vof': return renderVouF();
+      case 'definicoes': return renderDefinicoes();
+      case 'lacunas': return renderLacunas();
+      default: return renderInicio();
+    }
+  };
+
+  return (
+    <div className="App">
+      <nav className="navbar">
+        <div className="nav-brand">🎖️ Liderança EsFM</div>
+        <div className="nav-links">
+          {tabs.map(t=>(
+            <button key={t.id} className={abaAtiva===t.id?'ativo':''} onClick={()=>navegar(t.id)}>{t.label}</button>
+          ))}
+        </div>
+      </nav>
+      <main className="conteudo-principal">{renderAtivo()}</main>
+      <footer className="rodape">📚 App de Estudos — Liderança e Bases Psicológicas | EsFM | "Onde há vontade, há sucesso!"</footer>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
